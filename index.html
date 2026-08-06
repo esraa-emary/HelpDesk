@@ -1,385 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HD-001 · HelpDesk Lite — Engineering Action Plan</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HelpDesk Lite · Engineering Action Plan</title>
+  <!-- Font Awesome for icons (optional but nice) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f4f7fc;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 2rem 1.5rem;
+      color: #0b1e33;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* header */
+    .plan-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      background: white;
+      padding: 1.5rem 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0,20,50,0.04);
+      border: 1px solid #e9edf4;
+    }
+
+    .plan-header h1 {
+      font-weight: 600;
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .plan-header h1 i {
+      color: #2a7de1;
+      font-size: 2rem;
+    }
+
+    .badge {
+      background: #eef3fc;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #1a4c8c;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #3b5f7a;
+      margin-top: 0.2rem;
+    }
+
+    /* grid layout */
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1.8rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem 1.6rem;
+      box-shadow: 0 6px 18px rgba(0,20,40,0.03);
+      border: 1px solid #eef2f8;
+      transition: all 0.1s ease;
+      height: fit-content;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid #eef2f8;
+      padding-bottom: 0.75rem;
+    }
+
+    .card-header i {
+      font-size: 1.5rem;
+      color: #2a7de1;
+      width: 2rem;
+      text-align: center;
+    }
+
+    .card-header h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .card-header .tag {
+      margin-left: auto;
+      background: #e9edf4;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      color: #2a4058;
+    }
+
+    /* requirement framing */
+    .req-item {
+      display: flex;
+      gap: 0.7rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #f0f4fa;
+      font-size: 0.95rem;
+    }
+
+    .req-item:last-child {
+      border-bottom: none;
+    }
+
+    .req-item .label {
+      font-weight: 500;
+      color: #1d3a5a;
+      min-width: 90px;
+    }
+
+    .req-item .value {
+      color: #1d334b;
+    }
+
+    .value .highlight {
+      background: #f0f7ff;
+      padding: 0.1rem 0.4rem;
+      border-radius: 12px;
+      color: #1a5bb5;
+    }
+
+    .unresolved-list, .risk-list, .work-list {
+      list-style: none;
+      margin-top: 0.25rem;
+    }
+
+    .unresolved-list li, .risk-list li, .work-list li {
+      padding: 0.45rem 0 0.45rem 1.8rem;
+      position: relative;
+      font-size: 0.92rem;
+      border-bottom: 1px solid #f2f6fc;
+    }
+
+    .unresolved-list li:last-child, .risk-list li:last-child, .work-list li:last-child {
+      border-bottom: none;
+    }
+
+    .unresolved-list li::before {
+      content: "❓";
+      position: absolute;
+      left: 0;
+      color: #d97706;
+    }
+
+    .risk-list li::before {
+      content: "⚠️";
+      position: absolute;
+      left: 0;
+    }
+
+    .work-list li::before {
+      content: "▹";
+      position: absolute;
+      left: 0.2rem;
+      color: #2a7de1;
+      font-weight: bold;
+    }
+
+    .tag-blue {
+      background: #deeaf9;
+      color: #10428a;
+      font-size: 0.7rem;
+      padding: 0.1rem 0.6rem;
+      border-radius: 40px;
+      font-weight: 500;
+      display: inline-block;
+      margin-left: 0.3rem;
+    }
+
+    .depends {
+      display: block;
+      font-size: 0.75rem;
+      color: #5a6f87;
+      margin-top: 0.2rem;
+      background: #f4f8fe;
+      padding: 0.1rem 0.6rem;
+      border-radius: 12px;
+      width: fit-content;
+    }
+
+    .sprint-block {
+      background: #f8faff;
+      padding: 0.8rem 1rem;
+      border-radius: 1rem;
+      margin-top: 0.8rem;
+      border-left: 4px solid #2a7de1;
+    }
+
+    .sprint-block strong {
+      color: #0b2b50;
+    }
+
+    .sprint-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .sprint-item {
+      background: white;
+      padding: 0.2rem 0.9rem;
+      border-radius: 30px;
+      border: 1px solid #dce5f0;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #1d405e;
+    }
+
+    .sprint-item i {
+      color: #2a7de1;
+      margin-right: 0.2rem;
+    }
+
+    .walkthrough-note {
+      background: #f0f6fe;
+      border-radius: 1rem;
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.2rem;
+      border: 1px solid #d3e2f5;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .walkthrough-note i {
+      font-size: 2rem;
+      color: #1a5bb5;
+    }
+
+    .walkthrough-note .note-text {
+      font-size: 0.95rem;
+      color: #0e2b48;
+    }
+
+    .walkthrough-note .note-text span {
+      font-weight: 500;
+    }
+
+    .footer-meta {
+      margin-top: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: #4b6988;
+      border-top: 1px solid #e2eaf3;
+      padding-top: 1.8rem;
+    }
+
+    @media (max-width: 700px) {
+      .plan-header {
+        flex-direction: column;
+        align-items: start;
+        gap: 0.7rem;
+      }
+      .card-header .tag {
+        display: none;
+      }
+    }
+  </style>
 </head>
 <body>
+<div class="container">
 
-<!-- ============ TICKET HEADER STRIP ============ -->
-<header class="ticket-strip">
-  <div class="ticket-strip__inner">
-    <div class="ticket-id">HD-001</div>
-    <div class="ticket-meta">
-      <span class="meta-field"><span class="meta-label">Project</span><span class="meta-value">HelpDesk Lite</span></span>
-      <span class="meta-field"><span class="meta-label">Type</span><span class="meta-value">Internal Support Ticketing — v1</span></span>
-      <span class="meta-field"><span class="meta-label">Status</span><span class="meta-value pill pill--planning">Planning</span></span>
-      <span class="meta-field meta-field--priority"><span class="meta-label">Priority</span><span class="meta-value pill pill--p1">P1</span></span>
+  <!-- Header -->
+  <div class="plan-header">
+    <div>
+      <h1><i class="fas fa-ticket-alt"></i> HelpDesk Lite</h1>
+      <div class="subtitle">Engineering Action Plan Pack · v1.0</div>
+    </div>
+    <div style="display: flex; gap: 0.8rem; align-items: center;">
+      <span class="badge"><i class="fas fa-flag-checkered"></i> delivery-ready start</span>
+      <span class="badge"><i class="fas fa-clock"></i> sprint 0 · discovery</span>
     </div>
   </div>
-</header>
 
-<!-- ============ STICKY TAB NAV ============ -->
-<nav class="tab-nav" id="tab-nav" aria-label="Section navigation">
-  <ol class="tab-nav__list">
-    <li><a href="#framing" class="tab-link" data-tab="framing">01 Framing</a></li>
-    <li><a href="#breakdown" class="tab-link" data-tab="breakdown">02 Breakdown</a></li>
-    <li><a href="#execution" class="tab-link" data-tab="execution">03 Execution</a></li>
-    <li><a href="#walkthrough" class="tab-link" data-tab="walkthrough">04 Walkthrough</a></li>
-  </ol>
-</nav>
+  <!-- Grid -->
+  <div class="action-grid">
 
-<main>
-
-  <!-- ============ HERO ============ -->
-  <section class="hero">
-    <p class="eyebrow">Engineering Action Plan Pack</p>
-    <h1>From "we need a helpdesk" <br> to a plan a team can actually start.</h1>
-    <p class="hero__dek">
-      Support requests currently arrive by email, chat, and hallway follow‑up — with no shared record of
-      who owns what. This pack turns that idea into a scoped, sequenced starting point for HelpDesk Lite v1,
-      without pretending every decision has already been made.
-    </p>
-    <div class="hero__stats">
-      <div class="hstat">
-        <span class="hstat__num">3</span>
-        <span class="hstat__label">intake channels<br>being replaced</span>
+    <!-- 1. Requirement framing -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-clipboard-list"></i>
+        <h2>Requirement framing</h2>
+        <span class="tag">core</span>
       </div>
-      <div class="hstat">
-        <span class="hstat__num">8</span>
-        <span class="hstat__label">work areas<br>identified</span>
+      <div class="req-item">
+        <span class="label">Core problem</span>
+        <span class="value">Requests lost across email/chat; unclear ownership; no visibility.</span>
       </div>
-      <div class="hstat">
-        <span class="hstat__num">6</span>
-        <span class="hstat__label">decisions still<br>open</span>
+      <div class="req-item">
+        <span class="label">Intended outcome</span>
+        <span class="value">Structured intake, clear ownership, visible progress for v1.</span>
       </div>
-    </div>
-  </section>
-
-  <!-- ============ 01 FRAMING ============ -->
-  <section class="section" id="framing">
-    <div class="section__head">
-      <p class="eyebrow">01 · Requirement Framing</p>
-      <h2>What this version is actually trying to deliver</h2>
-    </div>
-
-    <div class="framing-grid">
-      <article class="card card--wide">
-        <h3>Core problem</h3>
-        <p>Employees report issues through email, chat, and informal follow‑up with no shared record.
-        Requests get duplicated, ownership goes unclear the moment a thread goes quiet, and staff spend
-        more time re‑asking "who has this?" than resolving anything.</p>
-      </article>
-
-      <article class="card card--wide">
-        <h3>Intended outcome</h3>
-        <p>Every request enters one workspace, gets a visible state and a visible owner, and can be
-        tracked from submission to resolution without a side conversation. Managers can see what's open,
-        stuck, or done without asking.</p>
-      </article>
-
-      <article class="card">
-        <h3>In scope — v1</h3>
-        <ul class="tick-list tick-list--in">
-          <li>Single structured intake form</li>
-          <li>One shared ticket queue</li>
-          <li>Manual / rule‑light assignment</li>
-          <li>A small, explicit status set</li>
-          <li>Basic manager visibility view</li>
-          <li>Simple category &amp; priority tagging</li>
-        </ul>
-      </article>
-
-      <article class="card">
-        <h3>Non‑goals — v1</h3>
-        <ul class="tick-list tick-list--out">
-          <li>SLA timers &amp; escalation automation</li>
-          <li>Full self‑service knowledge base</li>
-          <li>Auto‑ingest from email / chat</li>
-          <li>Custom workflow builder</li>
-          <li>Advanced analytics / reporting</li>
-          <li>Multi‑team routing logic</li>
-        </ul>
-      </article>
-
-      <article class="card card--wide">
-        <h3>Unresolved questions</h3>
-        <p class="card__note">These are open by design — planning past them now would mean planning on guesses.</p>
-        <ol class="q-list">
-          <li>What fields are required at submission — and which are optional?</li>
-          <li>Who assigns ownership: self‑pick, auto‑assign, or manager‑assign?</li>
-          <li>What is the full state machine — how many states, and what moves a ticket between them?</li>
-          <li>What exactly does a manager need to see on day one?</li>
-          <li>Where is the line between v1 and v2 — especially for self‑service content?</li>
-          <li>Are category and priority set by the requester, or set at triage?</li>
-        </ol>
-      </article>
-
-      <article class="card card--wide card--risk">
-        <h3>Major risks</h3>
-        <div class="risk-grid">
-          <div class="risk">
-            <span class="risk__tag">Scope</span>
-            <p>Drifting from "lightweight internal tool" toward a full enterprise platform before v1 ships.</p>
-          </div>
-          <div class="risk">
-            <span class="risk__tag">Adoption</span>
-            <p>A workflow too rigid for how support actually happens gets abandoned back into email.</p>
-          </div>
-          <div class="risk">
-            <span class="risk__tag">Ownership</span>
-            <p>An undefined assignment model reproduces the exact "who has this?" problem being solved.</p>
-          </div>
-          <div class="risk">
-            <span class="risk__tag">Sequencing</span>
-            <p>Building visibility or automation features before the core state machine is agreed.</p>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- ============ 02 BREAKDOWN ============ -->
-  <section class="section section--alt" id="breakdown">
-    <div class="section__head">
-      <p class="eyebrow">02 · Planning‑Ready Breakdown</p>
-      <h2>Work areas, and what they're waiting on</h2>
-      <p class="section__dek">Eight work areas fall out of the requirement. Each is tagged by whether it
-      can move forward now, or is blocked on one of the six open questions above. Expand a row for the
-      first layer of breakdown.</p>
-    </div>
-
-    <div class="breakdown-list" id="breakdown-list">
-      <!-- populated by JS from data, but authored here for no-JS fallback -->
-      <details class="wa" open>
-        <summary>
-          <span class="wa__id">WA‑A</span>
-          <span class="wa__name">Request Intake</span>
-          <span class="wa__status wa__status--ready">Ready</span>
-        </summary>
-        <ul class="wa__items">
-          <li>Draft the minimum required field set (title, description, category)</li>
-          <li>Decide optional vs required fields <em>— depends on Q1</em></li>
-          <li>Build the submission form UI</li>
-        </ul>
-      </details>
-
-      <details class="wa">
-        <summary>
-          <span class="wa__id">WA‑B</span>
-          <span class="wa__name">Ticket Data Model &amp; State Machine</span>
-          <span class="wa__status wa__status--ready">Ready to draft</span>
-        </summary>
-        <ul class="wa__items">
-          <li>Define ticket entity: id, requester, owner, state, category, priority, timestamps</li>
-          <li>Propose a minimal state set for review <em>— feeds Q3</em></li>
-          <li>Define allowed state transitions</li>
-        </ul>
-      </details>
-
-      <details class="wa">
-        <summary>
-          <span class="wa__id">WA‑C</span>
-          <span class="wa__name">Ownership &amp; Assignment</span>
-          <span class="wa__status wa__status--blocked">Blocked</span>
-        </summary>
-        <ul class="wa__items">
-          <li>Choose assignment model <em>— blocked on Q2</em></li>
-          <li>Define reassignment / hand‑off behavior</li>
-          <li>Notify owner on assignment</li>
-        </ul>
-      </details>
-
-      <details class="wa">
-        <summary>
-          <span class="wa__id">WA‑D</span>
-          <span class="wa__name">Queue &amp; Ticket Views</span>
-          <span class="wa__status wa__status--ready">Ready</span>
-        </summary>
-        <ul class="wa__items">
-          <li>List view: all tickets, filterable by state and category</li>
-          <li>Detail view: single ticket, full history</li>
-          <li>Depends on WA‑B data model being drafted first</li>
-        </ul>
-      </details>
-
-      <details class="wa">
-        <summary>
-          <span class="wa__id">WA‑E</span>
-          <span class="wa__name">Manager Visibility</span>
-          <span class="wa__status wa__status--blocked">Blocked</span>
-        </summary>
-        <ul class="wa__items">
-          <li>Confirm what managers need on day one <em>— blocked on Q4</em></li>
-          <li>Workload‑by‑owner view</li>
-          <li>Open / stuck / done counts</li>
-        </ul>
-      </details>
-
-      <details class="wa">
-        <summary>
-          <span class="wa__id">WA‑F</span>
-          <span class="wa__name">Self‑Service / Knowledge Base</span>
-          <span class="wa__status wa__status--deferred">Deferred</span>
-        </summary>
-        <ul class="wa__items">
-          <li>Out of v1 unless Q5 resolves otherwise</li>
-          <li>Candidate for v2 once repeat‑question patterns are visible in real data</li>
-        </ul>
-      </details>
-
-      <details class="wa">
-        <summary>
-          <span class="wa__id">WA‑G</span>
-          <span class="wa__name">Notifications &amp; Follow‑up</span>
-          <span class="wa__status wa__status--blocked">Blocked</span>
-        </summary>
-        <ul class="wa__items">
-          <li>Depends on WA‑C assignment model being settled first</li>
-          <li>Define minimum notification set (assigned, status change)</li>
-        </ul>
-      </details>
-
-      <details class="wa">
-        <summary>
-          <span class="wa__id">WA‑H</span>
-          <span class="wa__name">Access &amp; Permissions</span>
-          <span class="wa__status wa__status--ready">Ready</span>
-        </summary>
-        <ul class="wa__items">
-          <li>Three roles: requester, support staff, manager</li>
-          <li>Define what each role can view / edit</li>
-        </ul>
-      </details>
-    </div>
-  </section>
-
-  <!-- ============ 03 EXECUTION ============ -->
-  <section class="section" id="execution">
-    <div class="section__head">
-      <p class="eyebrow">03 · Initial Execution Plan</p>
-      <h2>Where the team actually starts</h2>
-      <p class="section__dek">A working queue, staged the same way the product itself will stage tickets.
-      Cards are draggable — move one to see how the plan updates as decisions land.
-      <span class="section__hint">(drag a card, or use ⌘/Ctrl + arrow keys when a card is focused)</span></p>
-    </div>
-
-    <div class="board" id="board">
-      <div class="board__col" data-col="not-started">
-        <div class="board__col-head">
-          <span class="board__col-title">Not started</span>
-          <span class="board__col-count" data-count></span>
-        </div>
-        <div class="board__col-body" data-dropzone="not-started"></div>
+      <div class="req-item">
+        <span class="label">Scope boundaries</span>
+        <span class="value">Lightweight ticketing: submit, assign, status, basic manager view.</span>
       </div>
-      <div class="board__col" data-col="ready">
-        <div class="board__col-head">
-          <span class="board__col-title">Ready to start</span>
-          <span class="board__col-count" data-count></span>
-        </div>
-        <div class="board__col-body" data-dropzone="ready"></div>
+      <div class="req-item">
+        <span class="label">Non-goals (v1)</span>
+        <span class="value">No advanced KB, SLA, automations, or external channel integrations.</span>
       </div>
-      <div class="board__col" data-col="in-progress">
-        <div class="board__col-head">
-          <span class="board__col-title">In progress</span>
-          <span class="board__col-count" data-count></span>
-        </div>
-        <div class="board__col-body" data-dropzone="in-progress"></div>
+      <div style="margin-top: 1rem;">
+        <div style="font-weight: 500; font-size: 0.9rem; color: #1d3a5a;"><i class="fas fa-question-circle" style="color: #d97706;"></i> Unresolved questions</div>
+        <ul class="unresolved-list">
+          <li>Exact fields for submission? (priority, category, custom?)</li>
+          <li>Ownership model: manual assign, round-robin, or team-based?</li>
+          <li>State workflow: New → Assigned → In Progress → Resolved? or simpler?</li>
+          <li>Manager dashboard: what metrics / filters?</li>
+          <li>Self-service / KB: include v1 or defer?</li>
+        </ul>
       </div>
-      <div class="board__col" data-col="blocked">
-        <div class="board__col-head">
-          <span class="board__col-title">Blocked — waiting on decision</span>
-          <span class="board__col-count" data-count></span>
-        </div>
-        <div class="board__col-body" data-dropzone="blocked"></div>
+      <div style="margin-top: 1rem;">
+        <div style="font-weight: 500; font-size: 0.9rem; color: #1d3a5a;"><i class="fas fa-exclamation-triangle" style="color: #b45309;"></i> Major risks</div>
+        <ul class="risk-list">
+          <li>Adoption if workflow adds overhead</li>
+          <li>Unclear ownership delays resolution</li>
+          <li>Manager view lacks actionable data</li>
+          <li>Scope creep (KB, reporting, integrations)</li>
+        </ul>
       </div>
     </div>
 
-    <div class="sequence">
-      <h3>Sequence &amp; dependency logic</h3>
-      <ol class="sequence__list">
-        <li><strong>First:</strong> run the clarification pass on the six open questions — at minimum, the state machine (Q3) and ownership model (Q2), since almost everything else reads from those.</li>
-        <li><strong>Then:</strong> draft the ticket data model and intake fields in parallel — both only need the clarification pass, not each other.</li>
-        <li><strong>Then:</strong> build the queue and ticket detail views on top of the agreed data model.</li>
-        <li><strong>Only once ownership is settled:</strong> build assignment and notifications.</li>
-        <li><strong>Last, and only if scope allows:</strong> manager visibility (needs real ticket data flowing) and — separately — revisit self‑service as a v2 candidate, not a v1 task.</li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ============ 04 WALKTHROUGH ============ -->
-  <section class="section section--alt" id="walkthrough">
-    <div class="section__head">
-      <p class="eyebrow">04 · Walkthrough</p>
-      <h2>Recording script — 2 minutes</h2>
-      <p class="section__dek">This page is the leave‑behind; the recording is the reasoning behind it.
-      Use this timing as a guide when recording the walkthrough video deliverable.</p>
-    </div>
-
-    <div class="script">
-      <div class="script__row">
-        <span class="script__time">0:00–0:25</span>
-        <div class="script__body">
-          <h4>The problem</h4>
-          <p>Support requests come in through email, chat, and informal follow‑up. Nothing is shared,
-          so ownership disappears the moment a thread goes quiet — that's the actual problem, not
-          "we don't have ticketing software."</p>
-        </div>
+    <!-- 2. Planning-ready breakdown -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-diagram-project"></i>
+        <h2>Work breakdown</h2>
+        <span class="tag">layers</span>
       </div>
-      <div class="script__row">
-        <span class="script__time">0:25–0:55</span>
-        <div class="script__body">
-          <h4>What matters most</h4>
-          <p>One shared queue, a visible owner per request, and a small honest set of states — before
-          anything about automation, self‑service, or reporting. Everything else in v1 supports those three things.</p>
-        </div>
-      </div>
-      <div class="script__row">
-        <span class="script__time">0:55–1:25</span>
-        <div class="script__body">
-          <h4>What's still unclear</h4>
-          <p>Walk through the six open questions — required fields, the assignment model, the exact
-          state machine, what managers need first, the v1/v2 line, and who sets category/priority.
-          Name them as decisions to make, not gaps in the plan.</p>
-        </div>
-      </div>
-      <div class="script__row">
-        <span class="script__time">1:25–2:00</span>
-        <div class="script__body">
-          <h4>How the plan de‑risks delivery</h4>
-          <p>Point at the board: nothing that depends on an open question starts before that question
-          is answered. The team can begin on the data model and intake form today without guessing
-          at ownership or manager reporting.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ FOOTER / CHECKLIST ============ -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__ticket">
-        <span class="ticket-id ticket-id--footer">HD‑001</span>
-        <p>Engineering Action Plan Pack — HelpDesk Lite v1. Prepared as the first stage of a cumulative
-        delivery project; scope and decisions above are expected to evolve as open questions close.</p>
-      </div>
-      <ul class="footer__checklist">
-        <li>✓ Business problem stated plainly</li>
-        <li>✓ Scope and non‑goals visible</li>
-        <li>✓ Open questions and risks named</li>
-        <li>✓ Work broken into sequenced areas</li>
-        <li>✓ Execution plan shows dependency logic</li>
+      <div style="font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem;">Main work areas</div>
+      <ul class="work-list">
+        <li><strong>Data & domain</strong> – ticket model, states, assignment logic <span class="tag-blue">ready</span></li>
+        <li><strong>Request intake</strong> – form, validation, submission flow <span class="tag-blue">ready</span></li>
+        <li><strong>Ticket list & detail</strong> – view, filtering, status updates <span class="tag-blue">ready</span></li>
+        <li><strong>Assignment & ownership</strong> – manual assignment (v1) <span class="tag-blue">ready</span></li>
+        <li><strong>Manager visibility</strong> – basic dashboard: open tickets, workload <span class="tag-blue">ready</span></li>
+        <li><strong>Workflow states</strong> – New → Assigned → In Progress → Resolved <span class="tag-blue">ready</span></li>
       </ul>
+      <div style="margin-top: 1.2rem; background: #f4f9ff; padding: 0.8rem 1rem; border-radius: 1rem;">
+        <div style="font-weight: 500; font-size: 0.9rem;">🔸 Depends on unresolved decisions</div>
+        <ul class="work-list" style="margin-top: 0.2rem;">
+          <li>Notification logic (email vs internal) <span class="depends">⏳ needs stakeholder input</span></li>
+          <li>Manager dashboard metrics <span class="depends">⏳ needs clarification</span></li>
+          <li>Self-service / KB inclusion <span class="depends">⏳ deferred to v2</span></li>
+        </ul>
+      </div>
+      <div style="margin-top: 1rem; font-size: 0.9rem;">
+        <i class="fas fa-arrow-right" style="color: #2a7de1;"></i> <strong>Ready to move forward:</strong> data model, intake, list/detail, assignment, basic states.
+      </div>
     </div>
-  </footer>
 
-</main>
+    <!-- 3. Execution plan -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-road"></i>
+        <h2>Initial execution</h2>
+        <span class="tag">sprint 0–2</span>
+      </div>
+      <div class="sprint-block">
+        <strong><i class="fas fa-hourglass-start"></i> Sprint 0 · foundation (week 1)</strong>
+        <div class="sprint-grid">
+          <span class="sprint-item"><i class="fas fa-database"></i> Data model</span>
+          <span class="sprint-item"><i class="fas fa-user-cog"></i> Auth stubs</span>
+          <span class="sprint-item"><i class="fas fa-code-branch"></i> Repo setup</span>
+        </div>
+        <div style="font-size: 0.8rem; color: #385a7a; margin-top: 0.3rem;">✅ depends: none – start immediately</div>
+      </div>
 
-<script src="script.js"></script>
+      <div class="sprint-block" style="border-left-color: #2563eb;">
+        <strong><i class="fas fa-tasks"></i> Sprint 1 · core workflow (week 2-3)</strong>
+        <div class="sprint-grid">
+          <span class="sprint-item"><i class="fas fa-plus-circle"></i> Ticket form</span>
+          <span class="sprint-item"><i class="fas fa-list-ul"></i> Ticket list</span>
+          <span class="sprint-item"><i class="fas fa-user-check"></i> Manual assignment</span>
+          <span class="sprint-item"><i class="fas fa-exchange-alt"></i> State transitions</span>
+        </div>
+        <div class="depends" style="margin-top: 0.3rem;">⏳ depends on Sprint0 + design decisions (fields, states)</div>
+      </div>
+
+      <div class="sprint-block" style="border-left-color: #1e4e8a;">
+        <strong><i class="fas fa-chart-simple"></i> Sprint 2 · visibility & polish (week 4)</strong>
+        <div class="sprint-grid">
+          <span class="sprint-item"><i class="fas fa-gauge-high"></i> Manager dashboard</span>
+          <span class="sprint-item"><i class="fas fa-filter"></i> Filtering</span>
+          <span class="sprint-item"><i class="fas fa-check-double"></i> Resolve flow</span>
+        </div>
+        <div class="depends" style="margin-top: 0.3rem;">⏳ depends on Sprint1 + manager requirements</div>
+      </div>
+
+      <div style="margin-top: 1rem; background: #f2f6fd; border-radius: 1rem; padding: 0.5rem 1rem;">
+        <i class="fas fa-pause-circle" style="color: #b45309;"></i> <strong>Do not start yet:</strong> 
+        <span style="font-size: 0.9rem;">KB / knowledge base, email ingestion, SLA, advanced reporting.</span>
+      </div>
+      <div style="margin-top: 0.8rem; font-size: 0.9rem; background: #e6effa; padding: 0.4rem 1rem; border-radius: 30px; display: inline-block;">
+        <i class="fas fa-flag"></i> First deliverable: internal demo after Sprint1
+      </div>
+    </div>
+  </div>
+
+  <!-- Walkthrough / video note (simulated) -->
+  <div class="walkthrough-note">
+    <i class="fas fa-video"></i>
+    <div class="note-text">
+      <span>🎥 2‑min walkthrough summary:</span> 
+      The core problem is fragmented requests and unclear ownership. 
+      <strong>Most important:</strong> define a lightweight state machine + manual assignment to reduce confusion. 
+      <strong>Still unclear:</strong> exact fields, notification method, and manager metrics. 
+      Our action plan structures the work into three sprints, starting with data & intake, 
+      then core workflow, then manager visibility. This reduces risk by deferring non‑v1 features 
+      (KB, integrations) and highlights open questions that need stakeholder input before Sprint1.
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div class="footer-meta">
+    <span><i class="far fa-file-alt"></i> HelpDesk Lite · Engineering Action Plan Pack</span>
+    <span><i class="far fa-calendar-alt"></i> v1.0 · prepared for delivery start</span>
+    <span><i class="fas fa-check-circle" style="color: #1f8b4c;"></i> submission checklist: business problem clear · scope visible · risks/open questions · work breakdown · execution logic</span>
+  </div>
+
+</div>
 </body>
 </html>
