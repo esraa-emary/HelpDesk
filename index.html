@@ -3,399 +3,382 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HelpDesk Lite — AI-Assisted Engineering Workflow</title>
+<title>HD-001 · HelpDesk Lite — Engineering Action Plan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="board">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-top">
-      <div class="brand">
-        <span class="brand-mark">HD</span>
-        <div class="brand-text">
-          <span class="brand-name">HelpDesk Lite</span>
-          <span class="brand-sub">Delivery Workspace</span>
-        </div>
-      </div>
-      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation">☰</button>
+<!-- ============ TICKET HEADER STRIP ============ -->
+<header class="ticket-strip">
+  <div class="ticket-strip__inner">
+    <div class="ticket-id">HD-001</div>
+    <div class="ticket-meta">
+      <span class="meta-field"><span class="meta-label">Project</span><span class="meta-value">HelpDesk Lite</span></span>
+      <span class="meta-field"><span class="meta-label">Type</span><span class="meta-value">Internal Support Ticketing — v1</span></span>
+      <span class="meta-field"><span class="meta-label">Status</span><span class="meta-value pill pill--planning">Planning</span></span>
+      <span class="meta-field meta-field--priority"><span class="meta-label">Priority</span><span class="meta-value pill pill--p1">P1</span></span>
     </div>
-    <nav class="sidebar-nav" id="sidebarNav">
-      <span class="nav-label">Day 3 — AI Workflow</span>
-      <a href="#overview" class="nav-link">Overview</a>
-      <a href="#recap" class="nav-link">Day 1 &amp; 2 Recap</a>
-      <a href="#task-mapping" class="nav-link">AI Task Mapping</a>
-      <a href="#context-access" class="nav-link">Context &amp; Access Plan</a>
-      <a href="#coding-workflow" class="nav-link">AI Coding Workflow</a>
-      <a href="#debugging" class="nav-link">Debugging &amp; Verification</a>
-      <a href="#staying-current" class="nav-link">Staying Current</a>
-      <a href="#checklist" class="nav-link">Submission Checklist</a>
-      <a href="#walkthrough" class="nav-link">Walkthrough Video</a>
-    </nav>
-    <div class="sidebar-foot">
-      <div class="status-key">
-        <span class="status-key-title">Assignee key</span>
-        <span class="tag tag-ai">AI-SUPPORTED</span>
-        <span class="tag tag-human">HUMAN-LED</span>
-        <span class="tag tag-partial">PARTIAL</span>
+  </div>
+</header>
+
+<!-- ============ STICKY TAB NAV ============ -->
+<nav class="tab-nav" id="tab-nav" aria-label="Section navigation">
+  <ol class="tab-nav__list">
+    <li><a href="#framing" class="tab-link" data-tab="framing">01 Framing</a></li>
+    <li><a href="#breakdown" class="tab-link" data-tab="breakdown">02 Breakdown</a></li>
+    <li><a href="#execution" class="tab-link" data-tab="execution">03 Execution</a></li>
+    <li><a href="#walkthrough" class="tab-link" data-tab="walkthrough">04 Walkthrough</a></li>
+  </ol>
+</nav>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <p class="eyebrow">Engineering Action Plan Pack</p>
+    <h1>From "we need a helpdesk" <br> to a plan a team can actually start.</h1>
+    <p class="hero__dek">
+      Support requests currently arrive by email, chat, and hallway follow‑up — with no shared record of
+      who owns what. This pack turns that idea into a scoped, sequenced starting point for HelpDesk Lite v1,
+      without pretending every decision has already been made.
+    </p>
+    <div class="hero__stats">
+      <div class="hstat">
+        <span class="hstat__num">3</span>
+        <span class="hstat__label">intake channels<br>being replaced</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat__num">8</span>
+        <span class="hstat__label">work areas<br>identified</span>
+      </div>
+      <div class="hstat">
+        <span class="hstat__num">6</span>
+        <span class="hstat__label">decisions still<br>open</span>
       </div>
     </div>
-  </aside>
+  </section>
 
-  <!-- MAIN -->
-  <main class="main">
+  <!-- ============ 01 FRAMING ============ -->
+  <section class="section" id="framing">
+    <div class="section__head">
+      <p class="eyebrow">01 · Requirement Framing</p>
+      <h2>What this version is actually trying to deliver</h2>
+    </div>
 
-    <!-- HERO -->
-    <section class="hero" id="overview">
-      <div class="hero-eyebrow">
-        <span class="ticket-id">HD-BOARD</span>
-        <span class="divider-dot">•</span>
-        <span>Day 3 of 3 — Cumulative Project</span>
-      </div>
-      <h1 class="hero-title">AI joins the sprint.<br>Engineering judgment stays in charge.</h1>
-      <p class="hero-sub">
-        HelpDesk Lite already has a scoped plan (Day 1) and a Jira delivery workspace (Day 2).
-        Day 3 decides — task by task — where AI is allowed to help, what it's allowed to see,
-        and what evidence is required before its output ever reaches <span class="mono">main</span>.
-      </p>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-num">10</span>
-          <span class="hero-stat-label">engineering tasks mapped</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">3</span>
-          <span class="hero-stat-label">access tiers defined</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">7</span>
-          <span class="hero-stat-label">step controlled coding loop</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-num">1</span>
-          <span class="hero-stat-label">rule above all: evidence, not confidence</span>
-        </div>
-      </div>
-    </section>
+    <div class="framing-grid">
+      <article class="card card--wide">
+        <h3>Core problem</h3>
+        <p>Employees report issues through email, chat, and informal follow‑up with no shared record.
+        Requests get duplicated, ownership goes unclear the moment a thread goes quiet, and staff spend
+        more time re‑asking "who has this?" than resolving anything.</p>
+      </article>
 
-    <!-- RECAP -->
-    <section class="section" id="recap">
-      <div class="section-head">
-        <span class="section-eyebrow">Source of truth</span>
-        <h2>What carries forward from Day 1 &amp; Day 2</h2>
-        <p class="section-intro">
-          Day 3 does not restart the project or invent new scope. Every decision below inherits
-          the boundaries already agreed in the Engineering Action Plan Pack and the Jira workspace.
-        </p>
-      </div>
-      <div class="recap-grid">
-        <div class="recap-card">
-          <span class="recap-day">Day 1</span>
-          <h3>Engineering Action Plan Pack</h3>
-          <ul>
-            <li>Core problem: scattered intake, unclear ownership, weak manager visibility.</li>
-            <li>V1 scope: ticket intake, ownership, status workflow, manager view.</li>
-            <li>Non-goals: no knowledge base, no SLA automation, no multi-channel intake in V1.</li>
-            <li>Open questions: required intake fields, assignment logic, exact status set.</li>
-          </ul>
-        </div>
-        <div class="recap-card">
-          <span class="recap-day">Day 2</span>
-          <h3>Jira Delivery Workspace</h3>
-          <ul>
-            <li>Epics: Ticket Intake, Ownership &amp; Assignment, Status Workflow, Manager Dashboard.</li>
-            <li>Workflow: Backlog → Ready → In Progress → In Review → Done.</li>
-            <li>Sprint 1: intake form, status model, basic list view. Assignment logic held back.</li>
-            <li>Review rule: no ticket moves to Done without a reviewer + passing checks.</li>
-          </ul>
-        </div>
-        <div class="recap-card recap-card-accent">
-          <span class="recap-day">Day 3</span>
-          <h3>What gets added here</h3>
-          <ul>
-            <li>A per-task decision: AI-supported, human-led, or partial — with a reason.</li>
-            <li>A context/access tier for every AI interaction — never unlimited by default.</li>
-            <li>A plan-first coding loop and an evidence-first debugging loop.</li>
-            <li>A standing habit for keeping tool knowledge current.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+      <article class="card card--wide">
+        <h3>Intended outcome</h3>
+        <p>Every request enters one workspace, gets a visible state and a visible owner, and can be
+        tracked from submission to resolution without a side conversation. Managers can see what's open,
+        stuck, or done without asking.</p>
+      </article>
 
-    <!-- TASK MAPPING -->
-    <section class="section" id="task-mapping">
-      <div class="section-head">
-        <span class="section-eyebrow">Deliverable 1</span>
-        <h2>AI task mapping</h2>
-        <p class="section-intro">
-          Each backlog item from the Day 2 board, tagged by how AI is allowed to participate.
-          The tool decision starts from the task, never the other way around.
-        </p>
-      </div>
-      <div class="ticket-list" id="ticketList"><!-- injected by script.js --></div>
-    </section>
+      <article class="card">
+        <h3>In scope — v1</h3>
+        <ul class="tick-list tick-list--in">
+          <li>Single structured intake form</li>
+          <li>One shared ticket queue</li>
+          <li>Manual / rule‑light assignment</li>
+          <li>A small, explicit status set</li>
+          <li>Basic manager visibility view</li>
+          <li>Simple category &amp; priority tagging</li>
+        </ul>
+      </article>
 
-    <!-- CONTEXT & ACCESS -->
-    <section class="section" id="context-access">
-      <div class="section-head">
-        <span class="section-eyebrow">Deliverable 2</span>
-        <h2>Context &amp; access plan</h2>
-        <p class="section-intro">
-          Access is granted per task, not per tool. The default is the smallest context that lets
-          the AI do the job — never the whole repository "just in case."
-        </p>
-      </div>
+      <article class="card">
+        <h3>Non‑goals — v1</h3>
+        <ul class="tick-list tick-list--out">
+          <li>SLA timers &amp; escalation automation</li>
+          <li>Full self‑service knowledge base</li>
+          <li>Auto‑ingest from email / chat</li>
+          <li>Custom workflow builder</li>
+          <li>Advanced analytics / reporting</li>
+          <li>Multi‑team routing logic</li>
+        </ul>
+      </article>
 
-      <div class="tier-grid">
-        <div class="tier-card">
-          <span class="tier-num">Tier 1</span>
-          <h3>Prompt-only</h3>
-          <p>No files attached. Used for naming conventions, drafting a plan in words, explaining an
-          error message the human pastes in, or brainstorming test case ideas.</p>
-          <span class="tier-example">e.g. "What edge cases should a ticket status transition guard cover?"</span>
-        </div>
-        <div class="tier-card">
-          <span class="tier-num">Tier 2</span>
-          <h3>Single file / single module</h3>
-          <p>One component, one endpoint file, or one test file is shared. Used for well-scoped
-          UI components, isolated bug fixes, and writing tests for a function whose contract is known.</p>
-          <span class="tier-example">e.g. TicketForm.jsx only — not the whole /components folder.</span>
-        </div>
-        <div class="tier-card">
-          <span class="tier-num">Tier 3</span>
-          <h3>Multi-file / repo context</h3>
-          <p>Granted only when the task genuinely spans layers (e.g. a status change that must update
-          the API, the store, and the dashboard query). Always paired with a required human review step
-          and a diff walkthrough before merge.</p>
-          <span class="tier-example">e.g. status workflow: model + API handler + dashboard query.</span>
-        </div>
-        <div class="tier-card tier-card-restricted">
-          <span class="tier-num">Restricted</span>
-          <h3>Never auto-granted</h3>
-          <p>Auth/permission code, production credentials, real user ticket data, and anything touching
-          the assignment-logic decision that Day 1 left open. These require an explicit, task-specific
-          exception approved by a human reviewer — not default tool access.</p>
-        </div>
-      </div>
-    </section>
+      <article class="card card--wide">
+        <h3>Unresolved questions</h3>
+        <p class="card__note">These are open by design — planning past them now would mean planning on guesses.</p>
+        <ol class="q-list">
+          <li>What fields are required at submission — and which are optional?</li>
+          <li>Who assigns ownership: self‑pick, auto‑assign, or manager‑assign?</li>
+          <li>What is the full state machine — how many states, and what moves a ticket between them?</li>
+          <li>What exactly does a manager need to see on day one?</li>
+          <li>Where is the line between v1 and v2 — especially for self‑service content?</li>
+          <li>Are category and priority set by the requester, or set at triage?</li>
+        </ol>
+      </article>
 
-    <!-- CODING WORKFLOW -->
-    <section class="section" id="coding-workflow">
-      <div class="section-head">
-        <span class="section-eyebrow">Deliverable 3</span>
-        <h2>AI coding workflow — HD-102</h2>
-        <p class="section-intro">
-          One real task from the Day 2 board, walked through the full controlled loop:
-          frame → plan → review plan → implement → inspect → verify → decide.
-        </p>
-      </div>
-
-      <div class="task-brief">
-        <span class="ticket-id">HD-102</span>
-        <h3>Prevent invalid ticket status transitions</h3>
-        <p>Sprint 1 status model is Open → In Progress → Resolved → Closed. A ticket must not be able
-        to jump from Open directly to Closed, or move backward from Closed to Open without an explicit reopen action.</p>
-      </div>
-
-      <ol class="workflow-steps">
-        <li class="workflow-step">
-          <span class="step-num">01</span>
-          <div class="step-body">
-            <h4>Frame the task</h4>
-            <p>Written before opening any AI tool: "Add a guard function that validates a proposed status
-            transition against the approved Sprint 1 state model, and rejects/reports invalid transitions.
-            No change to the state model itself — that's already decided."</p>
+      <article class="card card--wide card--risk">
+        <h3>Major risks</h3>
+        <div class="risk-grid">
+          <div class="risk">
+            <span class="risk__tag">Scope</span>
+            <p>Drifting from "lightweight internal tool" toward a full enterprise platform before v1 ships.</p>
           </div>
-        </li>
-        <li class="workflow-step">
-          <span class="step-num">02</span>
-          <div class="step-body">
-            <h4>Prompt (Tier 2 access — single file)</h4>
-            <p class="prompt-box">"Here is <span class="mono">ticket.service.js</span> and the four approved statuses
-            (Open, In Progress, Resolved, Closed). Propose a plan for a transition-guard function before writing
-            code. Don't touch unrelated functions in this file."</p>
+          <div class="risk">
+            <span class="risk__tag">Adoption</span>
+            <p>A workflow too rigid for how support actually happens gets abandoned back into email.</p>
           </div>
-        </li>
-        <li class="workflow-step">
-          <span class="step-num">03</span>
-          <div class="step-body">
-            <h4>AI plan before coding</h4>
-            <p>AI returns a short plan: a transition map object, a pure <span class="mono">isValidTransition()</span>
-            function, an explicit "reopen" action separate from the forward flow, and unit test cases for
-            every legal and illegal pair.</p>
+          <div class="risk">
+            <span class="risk__tag">Ownership</span>
+            <p>An undefined assignment model reproduces the exact "who has this?" problem being solved.</p>
           </div>
-        </li>
-        <li class="workflow-step">
-          <span class="step-num">04</span>
-          <div class="step-body">
-            <h4>Human review of the plan</h4>
-            <p>Reviewer checks the plan — not code yet — against the Day 1/2 state model. Confirms the reopen
-            action is separate (matches the "Closed → Open needs an explicit action" rule) and that no new
-            status is being introduced. Plan approved with one change: log rejected transitions for later audit.</p>
+          <div class="risk">
+            <span class="risk__tag">Sequencing</span>
+            <p>Building visibility or automation features before the core state machine is agreed.</p>
           </div>
-        </li>
-        <li class="workflow-step">
-          <span class="step-num">05</span>
-          <div class="step-body">
-            <h4>Implementation</h4>
-            <p>AI implements the approved plan only. Human keeps the diff small on purpose — one function,
-            one map, one test file — so the review in the next step stays honest.</p>
-          </div>
-        </li>
-        <li class="workflow-step">
-          <span class="step-num">06</span>
-          <div class="step-body">
-            <h4>Output inspection</h4>
-            <p>Full diff read line by line. Checked for: scope creep (did it touch anything outside
-            ticket.service.js?), hidden assumptions (does it silently allow an untested transition?),
-            and whether the log statement matches the team's existing logging pattern.</p>
-          </div>
-        </li>
-        <li class="workflow-step">
-          <span class="step-num">07</span>
-          <div class="step-body">
-            <h4>Verify → decide</h4>
-            <p>Unit tests run for all 12 status pairs (4×4 minus identity). Manual run through the UI:
-            attempted Open → Closed in the browser and confirmed rejection. Decision:
-            <strong>keep</strong>, pending standard PR review before merge to Done column.</p>
-          </div>
-        </li>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ 02 BREAKDOWN ============ -->
+  <section class="section section--alt" id="breakdown">
+    <div class="section__head">
+      <p class="eyebrow">02 · Planning‑Ready Breakdown</p>
+      <h2>Work areas, and what they're waiting on</h2>
+      <p class="section__dek">Eight work areas fall out of the requirement. Each is tagged by whether it
+      can move forward now, or is blocked on one of the six open questions above. Expand a row for the
+      first layer of breakdown.</p>
+    </div>
+
+    <div class="breakdown-list" id="breakdown-list">
+      <!-- populated by JS from data, but authored here for no-JS fallback -->
+      <details class="wa" open>
+        <summary>
+          <span class="wa__id">WA‑A</span>
+          <span class="wa__name">Request Intake</span>
+          <span class="wa__status wa__status--ready">Ready</span>
+        </summary>
+        <ul class="wa__items">
+          <li>Draft the minimum required field set (title, description, category)</li>
+          <li>Decide optional vs required fields <em>— depends on Q1</em></li>
+          <li>Build the submission form UI</li>
+        </ul>
+      </details>
+
+      <details class="wa">
+        <summary>
+          <span class="wa__id">WA‑B</span>
+          <span class="wa__name">Ticket Data Model &amp; State Machine</span>
+          <span class="wa__status wa__status--ready">Ready to draft</span>
+        </summary>
+        <ul class="wa__items">
+          <li>Define ticket entity: id, requester, owner, state, category, priority, timestamps</li>
+          <li>Propose a minimal state set for review <em>— feeds Q3</em></li>
+          <li>Define allowed state transitions</li>
+        </ul>
+      </details>
+
+      <details class="wa">
+        <summary>
+          <span class="wa__id">WA‑C</span>
+          <span class="wa__name">Ownership &amp; Assignment</span>
+          <span class="wa__status wa__status--blocked">Blocked</span>
+        </summary>
+        <ul class="wa__items">
+          <li>Choose assignment model <em>— blocked on Q2</em></li>
+          <li>Define reassignment / hand‑off behavior</li>
+          <li>Notify owner on assignment</li>
+        </ul>
+      </details>
+
+      <details class="wa">
+        <summary>
+          <span class="wa__id">WA‑D</span>
+          <span class="wa__name">Queue &amp; Ticket Views</span>
+          <span class="wa__status wa__status--ready">Ready</span>
+        </summary>
+        <ul class="wa__items">
+          <li>List view: all tickets, filterable by state and category</li>
+          <li>Detail view: single ticket, full history</li>
+          <li>Depends on WA‑B data model being drafted first</li>
+        </ul>
+      </details>
+
+      <details class="wa">
+        <summary>
+          <span class="wa__id">WA‑E</span>
+          <span class="wa__name">Manager Visibility</span>
+          <span class="wa__status wa__status--blocked">Blocked</span>
+        </summary>
+        <ul class="wa__items">
+          <li>Confirm what managers need on day one <em>— blocked on Q4</em></li>
+          <li>Workload‑by‑owner view</li>
+          <li>Open / stuck / done counts</li>
+        </ul>
+      </details>
+
+      <details class="wa">
+        <summary>
+          <span class="wa__id">WA‑F</span>
+          <span class="wa__name">Self‑Service / Knowledge Base</span>
+          <span class="wa__status wa__status--deferred">Deferred</span>
+        </summary>
+        <ul class="wa__items">
+          <li>Out of v1 unless Q5 resolves otherwise</li>
+          <li>Candidate for v2 once repeat‑question patterns are visible in real data</li>
+        </ul>
+      </details>
+
+      <details class="wa">
+        <summary>
+          <span class="wa__id">WA‑G</span>
+          <span class="wa__name">Notifications &amp; Follow‑up</span>
+          <span class="wa__status wa__status--blocked">Blocked</span>
+        </summary>
+        <ul class="wa__items">
+          <li>Depends on WA‑C assignment model being settled first</li>
+          <li>Define minimum notification set (assigned, status change)</li>
+        </ul>
+      </details>
+
+      <details class="wa">
+        <summary>
+          <span class="wa__id">WA‑H</span>
+          <span class="wa__name">Access &amp; Permissions</span>
+          <span class="wa__status wa__status--ready">Ready</span>
+        </summary>
+        <ul class="wa__items">
+          <li>Three roles: requester, support staff, manager</li>
+          <li>Define what each role can view / edit</li>
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ 03 EXECUTION ============ -->
+  <section class="section" id="execution">
+    <div class="section__head">
+      <p class="eyebrow">03 · Initial Execution Plan</p>
+      <h2>Where the team actually starts</h2>
+      <p class="section__dek">A working queue, staged the same way the product itself will stage tickets.
+      Cards are draggable — move one to see how the plan updates as decisions land.
+      <span class="section__hint">(drag a card, or use ⌘/Ctrl + arrow keys when a card is focused)</span></p>
+    </div>
+
+    <div class="board" id="board">
+      <div class="board__col" data-col="not-started">
+        <div class="board__col-head">
+          <span class="board__col-title">Not started</span>
+          <span class="board__col-count" data-count></span>
+        </div>
+        <div class="board__col-body" data-dropzone="not-started"></div>
+      </div>
+      <div class="board__col" data-col="ready">
+        <div class="board__col-head">
+          <span class="board__col-title">Ready to start</span>
+          <span class="board__col-count" data-count></span>
+        </div>
+        <div class="board__col-body" data-dropzone="ready"></div>
+      </div>
+      <div class="board__col" data-col="in-progress">
+        <div class="board__col-head">
+          <span class="board__col-title">In progress</span>
+          <span class="board__col-count" data-count></span>
+        </div>
+        <div class="board__col-body" data-dropzone="in-progress"></div>
+      </div>
+      <div class="board__col" data-col="blocked">
+        <div class="board__col-head">
+          <span class="board__col-title">Blocked — waiting on decision</span>
+          <span class="board__col-count" data-count></span>
+        </div>
+        <div class="board__col-body" data-dropzone="blocked"></div>
+      </div>
+    </div>
+
+    <div class="sequence">
+      <h3>Sequence &amp; dependency logic</h3>
+      <ol class="sequence__list">
+        <li><strong>First:</strong> run the clarification pass on the six open questions — at minimum, the state machine (Q3) and ownership model (Q2), since almost everything else reads from those.</li>
+        <li><strong>Then:</strong> draft the ticket data model and intake fields in parallel — both only need the clarification pass, not each other.</li>
+        <li><strong>Then:</strong> build the queue and ticket detail views on top of the agreed data model.</li>
+        <li><strong>Only once ownership is settled:</strong> build assignment and notifications.</li>
+        <li><strong>Last, and only if scope allows:</strong> manager visibility (needs real ticket data flowing) and — separately — revisit self‑service as a v2 candidate, not a v1 task.</li>
       </ol>
-    </section>
+    </div>
+  </section>
 
-    <!-- DEBUGGING -->
-    <section class="section" id="debugging">
-      <div class="section-head">
-        <span class="section-eyebrow">Deliverable 4</span>
-        <h2>Debugging &amp; verification example</h2>
-        <p class="section-intro">
-          Investigation always comes before a patch request. Evidence decides the outcome, not
-          how confident the explanation sounds.
-        </p>
-      </div>
+  <!-- ============ 04 WALKTHROUGH ============ -->
+  <section class="section section--alt" id="walkthrough">
+    <div class="section__head">
+      <p class="eyebrow">04 · Walkthrough</p>
+      <h2>Recording script — 2 minutes</h2>
+      <p class="section__dek">This page is the leave‑behind; the recording is the reasoning behind it.
+      Use this timing as a guide when recording the walkthrough video deliverable.</p>
+    </div>
 
-      <div class="bug-card">
-        <div class="bug-head">
-          <span class="ticket-id">HD-108</span>
-          <span class="tag tag-partial">PARTIAL</span>
-        </div>
-        <h3>Bug: resolved tickets reappear in the Open queue</h3>
-        <p class="bug-desc">
-          Reported by support staff: a ticket marked Resolved shows back up in the manager's "Open" list
-          a few minutes after being reassigned to a different agent.
-        </p>
-
-        <div class="evidence-grid">
-          <div class="evidence-card">
-            <span class="evidence-label">1 — Reproduce</span>
-            <p>Confirmed locally: resolving a ticket, then reassigning it, flips its status field back
-            to "Open" in the database.</p>
-          </div>
-          <div class="evidence-card">
-            <span class="evidence-label">2 — Read the diff / blame</span>
-            <p>Git blame on the assignment handler shows a recent AI-assisted change to
-            <span class="mono">reassignTicket()</span> that resets a "status" field for an unrelated reason
-            (queue position), overwriting the real status field with the same name.</p>
-          </div>
-          <div class="evidence-card">
-            <span class="evidence-label">3 — Check logs</span>
-            <p>Server logs show two writes to the same ticket row within 40ms — the resolve write, then
-            the reassignment write — confirming a race/overwrite, not a UI caching issue.</p>
-          </div>
-          <div class="evidence-card">
-            <span class="evidence-label">4 — Ask the AI to explain, not fix</span>
-            <p>AI is given only the two functions involved and asked to explain the field collision — not
-            to produce a patch yet. Its explanation matches the log evidence: a naming collision between
-            "status" (ticket state) and "status" (queue position) in the same update payload.</p>
-          </div>
-        </div>
-
-        <div class="decision-box">
-          <span class="decision-label">Decision</span>
-          <p><strong>Revise.</strong> The original AI-assisted change is not rolled back entirely — the
-          reassignment logic itself is correct — but the field name collision is renamed
-          (<span class="mono">queuePosition</span> instead of reusing <span class="mono">status</span>),
-          re-reviewed with the same plan-first process, and covered with a regression test that resolves
-          then reassigns a ticket in sequence.</p>
+    <div class="script">
+      <div class="script__row">
+        <span class="script__time">0:00–0:25</span>
+        <div class="script__body">
+          <h4>The problem</h4>
+          <p>Support requests come in through email, chat, and informal follow‑up. Nothing is shared,
+          so ownership disappears the moment a thread goes quiet — that's the actual problem, not
+          "we don't have ticketing software."</p>
         </div>
       </div>
-    </section>
-
-    <!-- STAYING CURRENT -->
-    <section class="section" id="staying-current">
-      <div class="section-head">
-        <span class="section-eyebrow">Deliverable 5</span>
-        <h2>Staying current plan</h2>
-        <p class="section-intro">
-          AI tool behavior changes fast. The team refreshes assumptions on a schedule instead of
-          relying on memory of how a tool used to work.
-        </p>
-      </div>
-
-      <div class="current-grid">
-        <div class="current-card">
-          <h3>Before each new sprint</h3>
-          <p>Whoever owns the AI-assisted tasks that sprint checks the tool's official changelog or
-          documentation for anything that changed since last sprint — new model version, new default
-          permissions, deprecated features.</p>
-        </div>
-        <div class="current-card">
-          <h3>Trusted sources to check</h3>
-          <ul>
-            <li><a href="https://docs.claude.com" target="_blank" rel="noopener">docs.claude.com</a> — official product &amp; API documentation</li>
-            <li><a href="https://support.claude.com" target="_blank" rel="noopener">support.claude.com</a> — feature and usage updates</li>
-            <li><a href="https://www.anthropic.com/news" target="_blank" rel="noopener">anthropic.com/news</a> — model and policy announcements</li>
-          </ul>
-        </div>
-        <div class="current-card">
-          <h3>Standing rule</h3>
-          <p>No engineer assumes a tool's context limits, access defaults, or capabilities from memory
-          alone when starting a new type of task with it. If it's the first time using a given AI
-          capability for HelpDesk Lite, the source is checked first.</p>
+      <div class="script__row">
+        <span class="script__time">0:25–0:55</span>
+        <div class="script__body">
+          <h4>What matters most</h4>
+          <p>One shared queue, a visible owner per request, and a small honest set of states — before
+          anything about automation, self‑service, or reporting. Everything else in v1 supports those three things.</p>
         </div>
       </div>
-    </section>
-
-    <!-- CHECKLIST -->
-    <section class="section" id="checklist">
-      <div class="section-head">
-        <span class="section-eyebrow">Before submitting</span>
-        <h2>Submission checklist</h2>
-      </div>
-      <ul class="checklist" id="checklistList"><!-- injected by script.js --></ul>
-    </section>
-
-    <!-- WALKTHROUGH -->
-    <section class="section" id="walkthrough">
-      <div class="section-head">
-        <span class="section-eyebrow">Deliverable 6</span>
-        <h2>Short walkthrough video</h2>
-        <p class="section-intro">
-          A 2–3 minute recording covering: where AI helps, where it's risky, and how this workflow
-          protects the delivery quality set in Day 1 &amp; Day 2.
-        </p>
-      </div>
-      <div class="video-slot">
-        <div class="video-slot-inner">
-          <span class="video-icon">▶</span>
-          <p>Drop your recorded walkthrough here — replace this block with an
-            <span class="mono">&lt;video&gt;</span> embed or a link to your hosted recording.</p>
+      <div class="script__row">
+        <span class="script__time">0:55–1:25</span>
+        <div class="script__body">
+          <h4>What's still unclear</h4>
+          <p>Walk through the six open questions — required fields, the assignment model, the exact
+          state machine, what managers need first, the v1/v2 line, and who sets category/priority.
+          Name them as decisions to make, not gaps in the plan.</p>
         </div>
       </div>
-    </section>
+      <div class="script__row">
+        <span class="script__time">1:25–2:00</span>
+        <div class="script__body">
+          <h4>How the plan de‑risks delivery</h4>
+          <p>Point at the board: nothing that depends on an open question starts before that question
+          is answered. The team can begin on the data model and intake form today without guessing
+          at ownership or manager reporting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer class="footer">
-      <span>HelpDesk Lite — Day 3 Assignment</span>
-      <span class="footer-dot">•</span>
-      <span>AI assists. Engineering judgment decides.</span>
-    </footer>
+  <!-- ============ FOOTER / CHECKLIST ============ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__ticket">
+        <span class="ticket-id ticket-id--footer">HD‑001</span>
+        <p>Engineering Action Plan Pack — HelpDesk Lite v1. Prepared as the first stage of a cumulative
+        delivery project; scope and decisions above are expected to evolve as open questions close.</p>
+      </div>
+      <ul class="footer__checklist">
+        <li>✓ Business problem stated plainly</li>
+        <li>✓ Scope and non‑goals visible</li>
+        <li>✓ Open questions and risks named</li>
+        <li>✓ Work broken into sequenced areas</li>
+        <li>✓ Execution plan shows dependency logic</li>
+      </ul>
+    </div>
+  </footer>
 
-  </main>
-</div>
+</main>
 
 <script src="script.js"></script>
 </body>
