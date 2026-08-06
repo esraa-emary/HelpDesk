@@ -1,460 +1,1002 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HelpDesk Lite · Engineering Action Plan</title>
-  <!-- Font Awesome for icons (optional but nice) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpDesk Lite - Internal Support Ticketing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== CSS VARIABLES & RESET ===== */
+        :root {
+            --primary: #6C5CE7;
+            --primary-dark: #5A4BD1;
+            --primary-light: #A29BFE;
+            --secondary: #00CEC9;
+            --accent: #FD79A8;
+            --warning: #FDCB6E;
+            --success: #00B894;
+            --danger: #E17055;
+            --dark: #2D3436;
+            --light: #F8F9FA;
+            --gray: #636E72;
+            --gradient-1: linear-gradient(135deg, #6C5CE7, #A29BFE);
+            --gradient-2: linear-gradient(135deg, #00CEC9, #81ECEC);
+            --gradient-3: linear-gradient(135deg, #FD79A8, #FDCB6E);
+            --shadow: 0 10px 30px rgba(108, 92, 231, 0.15);
+            --shadow-hover: 0 15px 40px rgba(108, 92, 231, 0.25);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    body {
-      background: #f4f7fc;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      padding: 2rem 1.5rem;
-      color: #0b1e33;
-      line-height: 1.5;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-    }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #F0F2F7;
+            color: var(--dark);
+            min-height: 100vh;
+        }
 
-    /* header */
-    .plan-header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      background: white;
-      padding: 1.5rem 2rem;
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 20px rgba(0,20,50,0.04);
-      border: 1px solid #e9edf4;
-    }
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #E8ECF1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
 
-    .plan-header h1 {
-      font-weight: 600;
-      font-size: 1.8rem;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            background: white;
+            padding: 0 2rem;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            border-bottom: 3px solid transparent;
+            border-image: var(--gradient-1);
+            border-image-slice: 1;
+        }
 
-    .plan-header h1 i {
-      color: #2a7de1;
-      font-size: 2rem;
-    }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
 
-    .badge {
-      background: #eef3fc;
-      padding: 0.4rem 1rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #1a4c8c;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
+        .nav-brand i {
+            font-size: 2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .subtitle {
-      font-size: 0.95rem;
-      color: #3b5f7a;
-      margin-top: 0.2rem;
-    }
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            align-items: center;
+        }
 
-    /* grid layout */
-    .action-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 1.8rem;
-      margin-top: 1.8rem;
-    }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+        }
 
-    .card {
-      background: white;
-      border-radius: 1.5rem;
-      padding: 1.5rem 1.6rem;
-      box-shadow: 0 6px 18px rgba(0,20,40,0.03);
-      border: 1px solid #eef2f8;
-      transition: all 0.1s ease;
-      height: fit-content;
-    }
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(108, 92, 231, 0.08);
+        }
 
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.25rem;
-      border-bottom: 1px solid #eef2f8;
-      padding-bottom: 0.75rem;
-    }
+        .nav-links a.active {
+            color: white;
+            background: var(--gradient-1);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
 
-    .card-header i {
-      font-size: 1.5rem;
-      color: #2a7de1;
-      width: 2rem;
-      text-align: center;
-    }
+        .nav-links a i {
+            margin-right: 8px;
+        }
 
-    .card-header h2 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-left: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 2px solid #E8ECF1;
+        }
 
-    .card-header .tag {
-      margin-left: auto;
-      background: #e9edf4;
-      font-size: 0.7rem;
-      font-weight: 500;
-      padding: 0.2rem 0.7rem;
-      border-radius: 20px;
-      color: #2a4058;
-    }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-    /* requirement framing */
-    .req-item {
-      display: flex;
-      gap: 0.7rem;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid #f0f4fa;
-      font-size: 0.95rem;
-    }
+        .avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 206, 201, 0.3);
+        }
 
-    .req-item:last-child {
-      border-bottom: none;
-    }
+        /* ===== PAGE CONTAINER ===== */
+        .page-container {
+            display: none;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeIn 0.5s ease;
+        }
 
-    .req-item .label {
-      font-weight: 500;
-      color: #1d3a5a;
-      min-width: 90px;
-    }
+        .page-container.active {
+            display: block;
+        }
 
-    .req-item .value {
-      color: #1d334b;
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .value .highlight {
-      background: #f0f7ff;
-      padding: 0.1rem 0.4rem;
-      border-radius: 12px;
-      color: #1a5bb5;
-    }
+        /* ===== DASHBOARD ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
 
-    .unresolved-list, .risk-list, .work-list {
-      list-style: none;
-      margin-top: 0.25rem;
-    }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 5px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
 
-    .unresolved-list li, .risk-list li, .work-list li {
-      padding: 0.45rem 0 0.45rem 1.8rem;
-      position: relative;
-      font-size: 0.92rem;
-      border-bottom: 1px solid #f2f6fc;
-    }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            opacity: 0.05;
+            pointer-events: none;
+        }
 
-    .unresolved-list li:last-child, .risk-list li:last-child, .work-list li:last-child {
-      border-bottom: none;
-    }
+        .stat-card:nth-child(1) { border-left-color: var(--primary); }
+        .stat-card:nth-child(1)::before { background: var(--primary); }
+        .stat-card:nth-child(2) { border-left-color: var(--secondary); }
+        .stat-card:nth-child(2)::before { background: var(--secondary); }
+        .stat-card:nth-child(3) { border-left-color: var(--warning); }
+        .stat-card:nth-child(3)::before { background: var(--warning); }
+        .stat-card:nth-child(4) { border-left-color: var(--success); }
+        .stat-card:nth-child(4)::before { background: var(--success); }
 
-    .unresolved-list li::before {
-      content: "❓";
-      position: absolute;
-      left: 0;
-      color: #d97706;
-    }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
 
-    .risk-list li::before {
-      content: "⚠️";
-      position: absolute;
-      left: 0;
-    }
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-    .work-list li::before {
-      content: "▹";
-      position: absolute;
-      left: 0.2rem;
-      color: #2a7de1;
-      font-weight: bold;
-    }
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
 
-    .tag-blue {
-      background: #deeaf9;
-      color: #10428a;
-      font-size: 0.7rem;
-      padding: 0.1rem 0.6rem;
-      border-radius: 40px;
-      font-weight: 500;
-      display: inline-block;
-      margin-left: 0.3rem;
-    }
+        .stat-card .trend {
+            font-size: 0.85rem;
+            color: var(--success);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
 
-    .depends {
-      display: block;
-      font-size: 0.75rem;
-      color: #5a6f87;
-      margin-top: 0.2rem;
-      background: #f4f8fe;
-      padding: 0.1rem 0.6rem;
-      border-radius: 12px;
-      width: fit-content;
-    }
+        .stat-card .trend.down { color: var(--danger); }
 
-    .sprint-block {
-      background: #f8faff;
-      padding: 0.8rem 1rem;
-      border-radius: 1rem;
-      margin-top: 0.8rem;
-      border-left: 4px solid #2a7de1;
-    }
+        .stat-card .icon {
+            position: absolute;
+            right: 1.2rem;
+            top: 1.2rem;
+            font-size: 2rem;
+            opacity: 0.15;
+            color: var(--primary);
+        }
 
-    .sprint-block strong {
-      color: #0b2b50;
-    }
+        /* ===== TICKET TABLE ===== */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-    .sprint-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 0.8rem;
-      margin-top: 0.5rem;
-    }
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .sprint-item {
-      background: white;
-      padding: 0.2rem 0.9rem;
-      border-radius: 30px;
-      border: 1px solid #dce5f0;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #1d405e;
-    }
+        .section-header h2 i {
+            color: var(--primary);
+        }
 
-    .sprint-item i {
-      color: #2a7de1;
-      margin-right: 0.2rem;
-    }
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
 
-    .walkthrough-note {
-      background: #f0f6fe;
-      border-radius: 1rem;
-      padding: 1.2rem 1.5rem;
-      margin-top: 1.2rem;
-      border: 1px solid #d3e2f5;
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-    }
+        .btn-primary {
+            background: var(--gradient-1);
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+        }
 
-    .walkthrough-note i {
-      font-size: 2rem;
-      color: #1a5bb5;
-    }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(108, 92, 231, 0.4);
+        }
 
-    .walkthrough-note .note-text {
-      font-size: 0.95rem;
-      color: #0e2b48;
-    }
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
 
-    .walkthrough-note .note-text span {
-      font-weight: 500;
-    }
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
 
-    .footer-meta {
-      margin-top: 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      font-size: 0.85rem;
-      color: #4b6988;
-      border-top: 1px solid #e2eaf3;
-      padding-top: 1.8rem;
-    }
+        .btn-success {
+            background: var(--gradient-2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 206, 201, 0.3);
+        }
 
-    @media (max-width: 700px) {
-      .plan-header {
-        flex-direction: column;
-        align-items: start;
-        gap: 0.7rem;
-      }
-      .card-header .tag {
-        display: none;
-      }
-    }
-  </style>
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 206, 201, 0.4);
+        }
+
+        .btn-danger {
+            background: var(--gradient-3);
+            color: white;
+            box-shadow: 0 4px 15px rgba(253, 121, 168, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(253, 121, 168, 0.4);
+        }
+
+        .ticket-table {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .ticket-table thead {
+            background: var(--gradient-1);
+            color: white;
+        }
+
+        .ticket-table th {
+            padding: 1rem 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ticket-table td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #F0F2F7;
+        }
+
+        .ticket-table tbody tr {
+            transition: var(--transition);
+        }
+
+        .ticket-table tbody tr:hover {
+            background: rgba(108, 92, 231, 0.04);
+            transform: scale(1.002);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-new { background: #DFE6E9; color: #2D3436; }
+        .status-open { background: #74B9FF; color: #2D3436; }
+        .status-in-progress { background: #FDCB6E; color: #2D3436; }
+        .status-resolved { background: #55EFC4; color: #2D3436; }
+        .status-closed { background: #A29BFE; color: white; }
+
+        .priority-high { color: var(--danger); font-weight: 600; }
+        .priority-medium { color: var(--warning); font-weight: 600; }
+        .priority-low { color: var(--success); font-weight: 600; }
+
+        /* ===== TICKET FORM ===== */
+        .form-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-container h2 {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-container h2 i {
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .form-group label .required {
+            color: var(--danger);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #E8ECF1;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: #FAFBFC;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+            background: white;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* ===== KNOWLEDGE BASE ===== */
+        .kb-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .kb-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+            cursor: pointer;
+        }
+
+        .kb-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .kb-card:nth-child(2) { border-top-color: var(--secondary); }
+        .kb-card:nth-child(3) { border-top-color: var(--accent); }
+        .kb-card:nth-child(4) { border-top-color: var(--warning); }
+        .kb-card:nth-child(5) { border-top-color: var(--success); }
+        .kb-card:nth-child(6) { border-top-color: var(--danger); }
+
+        .kb-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .kb-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .kb-card .tag {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.8rem;
+        }
+
+        /* ===== ANALYTICS ===== */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .analytics-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+        }
+
+        .analytics-card h3 {
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analytics-card h3 i {
+            color: var(--primary);
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .chart-bar .label {
+            min-width: 80px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .chart-bar .bar-track {
+            flex: 1;
+            height: 8px;
+            background: #E8ECF1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .chart-bar .bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .chart-bar .bar-fill.primary { background: var(--primary); }
+        .chart-bar .bar-fill.secondary { background: var(--secondary); }
+        .chart-bar .bar-fill.accent { background: var(--accent); }
+        .chart-bar .bar-fill.warning { background: var(--warning); }
+        .chart-bar .bar-fill.success { background: var(--success); }
+        .chart-bar .bar-fill.danger { background: var(--danger); }
+
+        .chart-bar .value {
+            min-width: 40px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* ===== SETTINGS ===== */
+        .settings-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-section h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .settings-section h3 i {
+            color: var(--primary);
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #F0F2F7;
+        }
+
+        .toggle-group:last-child {
+            border-bottom: none;
+        }
+
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            background: #DFE6E9;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .toggle.active {
+            background: var(--primary);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .toggle.active::after {
+            left: 25px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            border-top: 1px solid #E8ECF1;
+            margin-top: 2rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 1rem;
+                flex-wrap: wrap;
+                height: auto;
+                min-height: 60px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 0.3rem;
+            }
+
+            .nav-links a {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .nav-user {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .page-container {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .ticket-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .stat-card .value {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links a span {
+                display: none;
+            }
+
+            .nav-links a i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
 
-  <!-- Header -->
-  <div class="plan-header">
-    <div>
-      <h1><i class="fas fa-ticket-alt"></i> HelpDesk Lite</h1>
-      <div class="subtitle">Engineering Action Plan Pack · v1.0</div>
-    </div>
-    <div style="display: flex; gap: 0.8rem; align-items: center;">
-      <span class="badge"><i class="fas fa-flag-checkered"></i> delivery-ready start</span>
-      <span class="badge"><i class="fas fa-clock"></i> sprint 0 · discovery</span>
-    </div>
-  </div>
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar">
+        <a href="#" class="nav-brand" onclick="showPage('dashboard')">
+            <i class="fas fa-ticket-alt"></i>
+            <span>HelpDesk<span style="color: var(--gray);">Lite</span></span>
+        </a>
 
-  <!-- Grid -->
-  <div class="action-grid">
-
-    <!-- 1. Requirement framing -->
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-clipboard-list"></i>
-        <h2>Requirement framing</h2>
-        <span class="tag">core</span>
-      </div>
-      <div class="req-item">
-        <span class="label">Core problem</span>
-        <span class="value">Requests lost across email/chat; unclear ownership; no visibility.</span>
-      </div>
-      <div class="req-item">
-        <span class="label">Intended outcome</span>
-        <span class="value">Structured intake, clear ownership, visible progress for v1.</span>
-      </div>
-      <div class="req-item">
-        <span class="label">Scope boundaries</span>
-        <span class="value">Lightweight ticketing: submit, assign, status, basic manager view.</span>
-      </div>
-      <div class="req-item">
-        <span class="label">Non-goals (v1)</span>
-        <span class="value">No advanced KB, SLA, automations, or external channel integrations.</span>
-      </div>
-      <div style="margin-top: 1rem;">
-        <div style="font-weight: 500; font-size: 0.9rem; color: #1d3a5a;"><i class="fas fa-question-circle" style="color: #d97706;"></i> Unresolved questions</div>
-        <ul class="unresolved-list">
-          <li>Exact fields for submission? (priority, category, custom?)</li>
-          <li>Ownership model: manual assign, round-robin, or team-based?</li>
-          <li>State workflow: New → Assigned → In Progress → Resolved? or simpler?</li>
-          <li>Manager dashboard: what metrics / filters?</li>
-          <li>Self-service / KB: include v1 or defer?</li>
+        <ul class="nav-links">
+            <li><a href="#" class="active" onclick="showPage('dashboard')" data-page="dashboard">
+                <i class="fas fa-chart-pie"></i> <span>Dashboard</span>
+            </a></li>
+            <li><a href="#" onclick="showPage('tickets')" data-page="tickets">
+                <i class="fas fa-list"></i> <span>Tickets</span>
+            </a></li>
+            <li><a href="#" onclick="showPage('new-ticket')" data-page="new-ticket">
+                <i class="fas fa-plus-circle"></i> <span>New Ticket</span>
+            </a></li>
+            <li><a href="#" onclick="showPage('knowledge')" data-page="knowledge">
+                <i class="fas fa-book"></i> <span>Knowledge</span>
+            </a></li>
+            <li><a href="#" onclick="showPage('analytics')" data-page="analytics">
+                <i class="fas fa-chart-line"></i> <span>Analytics</span>
+            </a></li>
+            <li><a href="#" onclick="showPage('settings')" data-page="settings">
+                <i class="fas fa-cog"></i> <span>Settings</span>
+            </a></li>
         </ul>
-      </div>
-      <div style="margin-top: 1rem;">
-        <div style="font-weight: 500; font-size: 0.9rem; color: #1d3a5a;"><i class="fas fa-exclamation-triangle" style="color: #b45309;"></i> Major risks</div>
-        <ul class="risk-list">
-          <li>Adoption if workflow adds overhead</li>
-          <li>Unclear ownership delays resolution</li>
-          <li>Manager view lacks actionable data</li>
-          <li>Scope creep (KB, reporting, integrations)</li>
-        </ul>
-      </div>
-    </div>
 
-    <!-- 2. Planning-ready breakdown -->
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-diagram-project"></i>
-        <h2>Work breakdown</h2>
-        <span class="tag">layers</span>
-      </div>
-      <div style="font-weight: 500; margin-bottom: 0.5rem; font-size: 0.9rem;">Main work areas</div>
-      <ul class="work-list">
-        <li><strong>Data & domain</strong> – ticket model, states, assignment logic <span class="tag-blue">ready</span></li>
-        <li><strong>Request intake</strong> – form, validation, submission flow <span class="tag-blue">ready</span></li>
-        <li><strong>Ticket list & detail</strong> – view, filtering, status updates <span class="tag-blue">ready</span></li>
-        <li><strong>Assignment & ownership</strong> – manual assignment (v1) <span class="tag-blue">ready</span></li>
-        <li><strong>Manager visibility</strong> – basic dashboard: open tickets, workload <span class="tag-blue">ready</span></li>
-        <li><strong>Workflow states</strong> – New → Assigned → In Progress → Resolved <span class="tag-blue">ready</span></li>
-      </ul>
-      <div style="margin-top: 1.2rem; background: #f4f9ff; padding: 0.8rem 1rem; border-radius: 1rem;">
-        <div style="font-weight: 500; font-size: 0.9rem;">🔸 Depends on unresolved decisions</div>
-        <ul class="work-list" style="margin-top: 0.2rem;">
-          <li>Notification logic (email vs internal) <span class="depends">⏳ needs stakeholder input</span></li>
-          <li>Manager dashboard metrics <span class="depends">⏳ needs clarification</span></li>
-          <li>Self-service / KB inclusion <span class="depends">⏳ deferred to v2</span></li>
-        </ul>
-      </div>
-      <div style="margin-top: 1rem; font-size: 0.9rem;">
-        <i class="fas fa-arrow-right" style="color: #2a7de1;"></i> <strong>Ready to move forward:</strong> data model, intake, list/detail, assignment, basic states.
-      </div>
-    </div>
-
-    <!-- 3. Execution plan -->
-    <div class="card">
-      <div class="card-header">
-        <i class="fas fa-road"></i>
-        <h2>Initial execution</h2>
-        <span class="tag">sprint 0–2</span>
-      </div>
-      <div class="sprint-block">
-        <strong><i class="fas fa-hourglass-start"></i> Sprint 0 · foundation (week 1)</strong>
-        <div class="sprint-grid">
-          <span class="sprint-item"><i class="fas fa-database"></i> Data model</span>
-          <span class="sprint-item"><i class="fas fa-user-cog"></i> Auth stubs</span>
-          <span class="sprint-item"><i class="fas fa-code-branch"></i> Repo setup</span>
+        <div class="nav-user">
+            <span style="font-weight: 500; color: var(--dark);">John Doe</span>
+            <div class="avatar" title="Profile">JD</div>
         </div>
-        <div style="font-size: 0.8rem; color: #385a7a; margin-top: 0.3rem;">✅ depends: none – start immediately</div>
-      </div>
+    </nav>
 
-      <div class="sprint-block" style="border-left-color: #2563eb;">
-        <strong><i class="fas fa-tasks"></i> Sprint 1 · core workflow (week 2-3)</strong>
-        <div class="sprint-grid">
-          <span class="sprint-item"><i class="fas fa-plus-circle"></i> Ticket form</span>
-          <span class="sprint-item"><i class="fas fa-list-ul"></i> Ticket list</span>
-          <span class="sprint-item"><i class="fas fa-user-check"></i> Manual assignment</span>
-          <span class="sprint-item"><i class="fas fa-exchange-alt"></i> State transitions</span>
+    <!-- ===== DASHBOARD PAGE ===== -->
+    <div id="page-dashboard" class="page-container active">
+        <div style="margin-bottom: 2rem;">
+            <h1 style="font-size: 2rem; font-weight: 700;">
+                👋 Welcome back, John!
+                <span style="font-size: 1rem; font-weight: 400; color: var(--gray); display: block; margin-top: 4px;">
+                    Here's what's happening with your support tickets today.
+                </span>
+            </h1>
         </div>
-        <div class="depends" style="margin-top: 0.3rem;">⏳ depends on Sprint0 + design decisions (fields, states)</div>
-      </div>
 
-      <div class="sprint-block" style="border-left-color: #1e4e8a;">
-        <strong><i class="fas fa-chart-simple"></i> Sprint 2 · visibility & polish (week 4)</strong>
-        <div class="sprint-grid">
-          <span class="sprint-item"><i class="fas fa-gauge-high"></i> Manager dashboard</span>
-          <span class="sprint-item"><i class="fas fa-filter"></i> Filtering</span>
-          <span class="sprint-item"><i class="fas fa-check-double"></i> Resolve flow</span>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-ticket-alt"></i></div>
+                <div class="label">Total Tickets</div>
+                <div class="value" style="color: var(--primary);">247</div>
+                <div class="trend"><i class="fas fa-arrow-up"></i> 12% from last month</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-clock"></i></div>
+                <div class="label">Open Tickets</div>
+                <div class="value" style="color: var(--secondary);">43</div>
+                <div class="trend"><i class="fas fa-arrow-up"></i> 5% from last week</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+                <div class="label">In Progress</div>
+                <div class="value" style="color: var(--warning);">28</div>
+                <div class="trend"><i class="fas fa-arrow-down" style="color: var(--danger);"></i> 3% from last week</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon"><i class="fas fa-check-circle"></i></div>
+                <div class="label">Resolved</div>
+                <div class="value" style="color: var(--success);">176</div>
+                <div class="trend"><i class="fas fa-arrow-up"></i> 18% from last month</div>
+            </div>
         </div>
-        <div class="depends" style="margin-top: 0.3rem;">⏳ depends on Sprint1 + manager requirements</div>
-      </div>
 
-      <div style="margin-top: 1rem; background: #f2f6fd; border-radius: 1rem; padding: 0.5rem 1rem;">
-        <i class="fas fa-pause-circle" style="color: #b45309;"></i> <strong>Do not start yet:</strong> 
-        <span style="font-size: 0.9rem;">KB / knowledge base, email ingestion, SLA, advanced reporting.</span>
-      </div>
-      <div style="margin-top: 0.8rem; font-size: 0.9rem; background: #e6effa; padding: 0.4rem 1rem; border-radius: 30px; display: inline-block;">
-        <i class="fas fa-flag"></i> First deliverable: internal demo after Sprint1
-      </div>
+        <div class="section-header">
+            <h2><i class="fas fa-list-ul"></i> Recent Tickets</h2>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-secondary" onclick="showPage('tickets')">
+                    <i class="fas fa-eye"></i> View All
+                </button>
+                <button class="btn btn-primary" onclick="showPage('new-ticket')">
+                    <i class="fas fa-plus"></i> New Ticket
+                </button>
+            </div>
+        </div>
+
+        <table class="ticket-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Assignee</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color: var(--primary);">#1243</strong></td>
+                    <td>Cannot access shared drive</td>
+                    <td><span class="status-badge status-open">Open</span></td>
+                    <td><span class="priority-high">🔴 High</span></td>
+                    <td>Sarah Chen</td>
+                    <td>2 hours ago</td>
+                </tr>
+                <tr>
+                    <td><strong style="color: var(--primary);">#1242</strong></td>
+                    <td>VPN connection dropping frequently</td>
+                    <td><span class="status-badge status-in-progress">In Progress</span></td>
+                    <td><span class="priority-medium">🟡 Medium</span></td>
+                    <td>Mike Johnson</td>
+                    <td>4 hours ago</td>
+                </tr>
+                <tr>
+                    <td><strong style="color: var(--primary);">#1241</strong></td>
+                    <td>New employee onboarding - laptop setup</td>
+                    <td><span class="status-badge status-new">New</span></td>
+                    <td><span class="priority-low">🟢 Low</span></td>
+                    <td>—</td>
+                    <td>1 day ago</td>
+                </tr>
+                <tr>
+                    <td><strong style="color: var(--primary);">#1240</strong></td>
+                    <td>Printer not working on floor 3</td>
+                    <td><span class="status-badge status-resolved">Resolved</span></td>
+                    <td><span class="priority-medium">🟡 Medium</span></td>
+                    <td>Anna Smith</td>
+                    <td>2 days ago</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-  </div>
 
-  <!-- Walkthrough / video note (simulated) -->
-  <div class="walkthrough-note">
-    <i class="fas fa-video"></i>
-    <div class="note-text">
-      <span>🎥 2‑min walkthrough summary:</span> 
-      The core problem is fragmented requests and unclear ownership. 
-      <strong>Most important:</strong> define a lightweight state machine + manual assignment to reduce confusion. 
-      <strong>Still unclear:</strong> exact fields, notification method, and manager metrics. 
-      Our action plan structures the work into three sprints, starting with data & intake, 
-      then core workflow, then manager visibility. This reduces risk by deferring non‑v1 features 
-      (KB, integrations) and highlights open questions that need stakeholder input before Sprint1.
+    <!-- ===== TICKETS PAGE ===== -->
+    <div id="page-tickets" class="page-container">
+        <div class="section-header">
+            <h2><i class="fas fa-list-ul" style="color: var(--primary);"></i> All Tickets</h2>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <select style="padding: 0.6rem 1rem; border-radius: 50px; border: 2px solid #E8ECF1; background: white; font-weight: 500;">
+                    <option>All Status</option>
+                    <option>New</option>
+                    <option>Open</option>
+                    <option>In Progress</option>
+                    <option>Resolved</option>
+                </select>
+                <select style="padding: 0.6rem 1rem; border-radius: 50px; border: 2px solid #E8ECF1; background: white; font-weight: 500;">
+                    <option>All Priorities</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                </select>
+                <button class="btn btn-primary" onclick="showPage('new-ticket')">
+                    <i class="fas fa-plus"></i> New Ticket
+                </button>
+            </div>
+        </div>
+
+        <table class="ticket-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Assignee</th>
+                    <th>Department</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color: var(--primary);">#1243</strong></td>
+                    <td>Cannot access shared drive</td>
+                    <td><span class="status-badge status-open">Open</span></td>
+                    <td><span class="priority-high">🔴 High</span></td>
+                    <td>Sarah Chen</td>
+                    <td>IT Support</td>
+                    <td>2 hours ago</td>
+                    <td>
+                        <button class="btn btn-secondary" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong style="color: var(--primary);">#1242</strong></td>
+                    <td>VPN connection dropping frequently</td>
+                    <td><span class="status-badge status-in-progress">In Progress</span></td>
+                    <td><span class="priority-medium">🟡 Medium</span></td>
+                    <td>Mike Johnson</td>
+                    <td>Network</td>
+                    <td>4 hours ago</td>
+                    <td>
+                        <button class="btn btn-secondary" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong style="color: var(--primary);">#1241</strong></td>
+                    <td>New employee onboarding - laptop setup</td>
+                    <td><span class="status-badge status-new">New</span></td>
+                    <td><span class="priority-low">🟢 Low</span></td>
+                    <td>—</td>
+                    <td>HR</td>
+                    <td>1 day ago</td>
+                    <td>
+                        <button class="btn btn-secondary" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong style="color: var(--primary);">#1240</strong></td>
+                    <td>Printer not working on floor 3</td>
+                    <td><span class="status-badge status-resolved">Resolved</span></td>
+                    <td><span class="priority-medium">🟡 Medium</span></td>
+                    <td>Anna Smith</td>
+                    <td>Facilities</td>
+                    <td>2 days ago</td>
+                    <td>
+                        <button class="btn btn-secondary" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong style="color: var(--primary);">#1239</strong></td>
+                    <td>Software license renewal request</td>
+                    <td><span class="status-badge status-closed">Closed</span></td>
+                    <td><span class="priority-low">🟢 Low</span></td>
+                    <td>John Doe</td>
+                    <td>Procurement</td>
+                    <td>3 days ago</td>
+                    <td>
+                        <button class="btn btn-secondary" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" style="padding: 0.2rem 0.8rem; font-size: 0.75rem;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-  </div>
 
-  <!-- footer -->
-  <div class="footer-meta">
-    <span><i class="far fa-file-alt"></i> HelpDesk Lite · Engineering Action Plan Pack</span>
-    <span><i class="far fa-calendar-alt"></i> v1.0 · prepared for delivery start</span>
-    <span><i class="fas fa-check-circle" style="color: #1f8b4c;"></i> submission checklist: business problem clear · scope visible · risks/open questions · work breakdown · execution logic</span>
-  </div>
-
-</div>
-</body>
-</html>
+    <!-- ===== NEW TICKET PAGE ===== -->
+    <div id="page-new-ticket" class="page-container">
+        <div class="form-container">
+            <h2><i class="fas fa-plus-circle" style="color: var(--primary);"></i> Create New Ticket</h2>
+            <form id="ticketForm" onsubmit="submitTicket(event)">
+                <div class="
