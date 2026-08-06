@@ -999,4 +999,330 @@
         <div class="form-container">
             <h2><i class="fas fa-plus-circle" style="color: var(--primary);"></i> Create New Ticket</h2>
             <form id="ticketForm" onsubmit="submitTicket(event)">
-                <div class="
+                <div class="form-group">
+                    <label>Ticket Title <span class="required">*</span></label>
+                    <input type="text" placeholder="Brief summary of the issue" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Priority <span class="required">*</span></label>
+                        <select required>
+                            <option value="">Select priority</option>
+                            <option value="high">🔴 High</option>
+                            <option value="medium">🟡 Medium</option>
+                            <option value="low">🟢 Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Department <span class="required">*</span></label>
+                        <select required>
+                            <option value="">Select department</option>
+                            <option>IT Support</option>
+                            <option>Network</option>
+                            <option>HR</option>
+                            <option>Facilities</option>
+                            <option>Procurement</option>
+                            <option>Finance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select>
+                        <option value="">Select category</option>
+                        <option>Hardware</option>
+                        <option>Software</option>
+                        <option>Network</option>
+                        <option>Access</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Description <span class="required">*</span></label>
+                    <textarea placeholder="Please provide detailed information about your issue..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Attachments</label>
+                    <input type="file" multiple style="padding: 0.5rem; border: 2px dashed #E8ECF1; background: #FAFBFC; cursor: pointer;">
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">
+                        <i class="fas fa-paper-plane"></i> Submit Ticket
+                    </button>
+                    <button type="reset" class="btn btn-secondary" style="flex: 0.5;">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== KNOWLEDGE BASE PAGE ===== -->
+    <div id="page-knowledge" class="page-container">
+        <div class="section-header">
+            <h2><i class="fas fa-book" style="color: var(--primary);"></i> Knowledge Base</h2>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" placeholder="Search articles..." style="padding: 0.6rem 1rem; border-radius: 50px; border: 2px solid #E8ECF1; width: 250px;">
+                <button class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary" style="font-size: 0.85rem;">All</button>
+            <button class="btn btn-secondary" style="font-size: 0.85rem;">IT Support</button>
+            <button class="btn btn-secondary" style="font-size: 0.85rem;">Network</button>
+            <button class="btn btn-secondary" style="font-size: 0.85rem;">Software</button>
+            <button class="btn btn-secondary" style="font-size: 0.85rem;">Hardware</button>
+            <button class="btn btn-secondary" style="font-size: 0.85rem;">Security</button>
+        </div>
+
+        <div class="kb-grid">
+            <div class="kb-card">
+                <h3>🔐 How to reset your password</h3>
+                <p>Step-by-step guide to resetting your account password through the self-service portal.</p>
+                <span class="tag">IT Support</span>
+            </div>
+            <div class="kb-card">
+                <h3>📶 VPN connection troubleshooting</h3>
+                <p>Common issues with VPN connectivity and how to resolve them quickly.</p>
+                <span class="tag">Network</span>
+            </div>
+            <div class="kb-card">
+                <h3>💻 Software installation guide</h3>
+                <p>How to request and install approved software on company devices.</p>
+                <span class="tag">Software</span>
+            </div>
+            <div class="kb-card">
+                <h3>🖨️ Printer setup and configuration</h3>
+                <p>Instructions for adding printers and resolving common printing issues.</p>
+                <span class="tag">Hardware</span>
+            </div>
+            <div class="kb-card">
+                <h3>🔒 Security best practices</h3>
+                <p>Essential security guidelines to protect company data and personal information.</p>
+                <span class="tag">Security</span>
+            </div>
+            <div class="kb-card">
+                <h3>📱 Mobile device management</h3>
+                <p>Setting up company email and apps on mobile devices securely.</p>
+                <span class="tag">IT Support</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ANALYTICS PAGE ===== -->
+    <div id="page-analytics" class="page-container">
+        <div class="section-header">
+            <h2><i class="fas fa-chart-line" style="color: var(--primary);"></i> Analytics & Reports</h2>
+            <div style="display: flex; gap: 10px;">
+                <select style="padding: 0.6rem 1rem; border-radius: 50px; border: 2px solid #E8ECF1; background: white;">
+                    <option>Last 30 days</option>
+                    <option>Last 7 days</option>
+                    <option>Last 90 days</option>
+                    <option>This year</option>
+                </select>
+                <button class="btn btn-primary"><i class="fas fa-download"></i> Export</button>
+            </div>
+        </div>
+
+        <div class="analytics-grid">
+            <div class="analytics-card">
+                <h3><i class="fas fa-ticket-alt"></i> Tickets by Status</h3>
+                <div class="chart-bar">
+                    <span class="label">New</span>
+                    <div class="bar-track"><div class="bar-fill primary" style="width: 15%;"></div></div>
+                    <span class="value">15</span>
+                </div>
+                <div class="chart-bar">
+                    <span class="label">Open</span>
+                    <div class="bar-track"><div class="bar-fill secondary" style="width: 25%;"></div></div>
+                    <span class="value">25</span>
+                </div>
+                <div class="chart-bar">
+                    <span class="label">In Progress</span>
+                    <div class="bar-track"><div class="bar-fill warning" style="width: 20%;"></div></div>
+                    <span class="value">20</span>
+                </div>
+                <div class="chart-bar">
+                    <span class="label">Resolved</span>
+                    <div class="bar-track"><div class="bar-fill success" style="width: 35%;"></div></div>
+                    <span class="value">35</span>
+                </div>
+                <div class="chart-bar">
+                    <span class="label">Closed</span>
+                    <div class="bar-track"><div class="bar-fill danger" style="width: 5%;"></div></div>
+                    <span class="value">5</span>
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <h3><i class="fas fa-flag"></i> Tickets by Priority</h3>
+                <div class="chart-bar">
+                    <span class="label">High</span>
+                    <div class="bar-track"><div class="bar-fill danger" style="width: 30%;"></div></div>
+                    <span class="value">30</span>
+                </div>
+                <div class="chart-bar">
+                    <span class="label">Medium</span>
+                    <div class="bar-track"><div class="bar-fill warning" style="width: 45%;"></div></div>
+                    <span class="value">45</span>
+                </div>
+                <div class="chart-bar">
+                    <span class="label">Low</span>
+                    <div class="bar-track"><div class="bar-fill success" style="width: 25%;"></div></div>
+                    <span class="value">25</span>
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <h3><i class="fas fa-users"></i> Top Assignees</h3>
+                <div class="chart-bar">
+                    <span class="label">Sarah Chen</span>
+                    <div class="bar-track"><div class="bar-fill primary" style="width: 40%;"></div></div>
+                    <span class="value">18</span>
+                </div>
+                <div class="chart-bar">
+                    <span class="label">Mike Johnson</span>
+                    <div class="bar-track"><div class="bar-fill secondary" style="width: 35%;"></div></div>
+                    <span class="value">15</span>
+                </div>
+                <div class="chart-bar">
+                    <span class="label">Anna Smith</span>
+                    <div class="bar-track"><div class="bar-fill accent" style="width: 25%;"></div></div>
+                    <span class="value">12</span>
+                </div>
+                <div class="chart-bar">
+                    <span class="label">John Doe</span>
+                    <div class="bar-track"><div class="bar-fill warning" style="width: 20%;"></div></div>
+                    <span class="value">10</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SETTINGS PAGE ===== -->
+    <div id="page-settings" class="page-container">
+        <div class="section-header">
+            <h2><i class="fas fa-cog" style="color: var(--primary);"></i> Settings</h2>
+        </div>
+
+        <div class="settings-section">
+            <h3><i class="fas fa-bell"></i> Notifications</h3>
+            <div class="toggle-group">
+                <span><strong>Email notifications</strong><br><small style="color: var(--gray);">Receive ticket updates via email</small></span>
+                <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+            </div>
+            <div class="toggle-group">
+                <span><strong>Slack notifications</strong><br><small style="color: var(--gray);">Receive updates in Slack channel</small></span>
+                <div class="toggle" onclick="this.classList.toggle('active')"></div>
+            </div>
+            <div class="toggle-group">
+                <span><strong>Desktop notifications</strong><br><small style="color: var(--gray);">Show browser notifications</small></span>
+                <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3><i class="fas fa-palette"></i> Appearance</h3>
+            <div class="toggle-group">
+                <span><strong>Dark mode</strong><br><small style="color: var(--gray);">Switch to dark theme</small></span>
+                <div class="toggle" onclick="this.classList.toggle('active')"></div>
+            </div>
+            <div class="toggle-group">
+                <span><strong>Compact view</strong><br><small style="color: var(--gray);">Reduce spacing for more content</small></span>
+                <div class="toggle" onclick="this.classList.toggle('active')"></div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <h3><i class="fas fa-shield-alt"></i> Security</h3>
+            <div class="toggle-group">
+                <span><strong>Two-factor authentication</strong><br><small style="color: var(--gray);">Add extra security layer</small></span>
+                <div class="toggle" onclick="this.classList.toggle('active')"></div>
+            </div>
+            <div class="toggle-group">
+                <span><strong>Session timeout</strong><br><small style="color: var(--gray);">Auto-logout after inactivity</small></span>
+                <select style="padding: 0.3rem 1rem; border-radius: 8px; border: 2px solid #E8ECF1;">
+                    <option>15 minutes</option>
+                    <option selected>30 minutes</option>
+                    <option>1 hour</option>
+                    <option>Never</option>
+                </select>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button class="btn btn-primary"><i class="fas fa-save"></i> Save Settings</button>
+            <button class="btn btn-secondary"><i class="fas fa-undo"></i> Reset Defaults</button>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <p>
+            <i class="fas fa-ticket-alt" style="color: var(--primary);"></i>
+            HelpDesk Lite v1.0 &nbsp;·&nbsp; Built with <i class="fas fa-heart" style="color: var(--accent);"></i> for internal support teams
+            &nbsp;·&nbsp; <a href="#" onclick="showPage('dashboard')">Dashboard</a> ·
+            <a href="#" onclick="showPage('tickets')">Tickets</a> ·
+            <a href="#" onclick="showPage('knowledge')">Knowledge Base</a>
+        </p>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-container').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Update nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageId) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Form submission
+        function submitTicket(event) {
+            event.preventDefault();
+            alert('✅ Ticket submitted successfully!\n\nYour request has been created and assigned to the appropriate team.');
+            // Reset form
+            document.getElementById('ticketForm').reset();
+            // Navigate to tickets page after submission
+            setTimeout(() => showPage('tickets'), 1000);
+        }
+
+        // Toggle switches (click handler)
+        document.querySelectorAll('.toggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+
+        // Console greeting
+        console.log('%c🎫 HelpDesk Lite v1.0', 'font-size: 24px; font-weight: bold; color: #6C5CE7;');
+        console.log('%cInternal Support Ticketing System', 'font-size: 14px; color: #636E72;');
+        console.log('%cBuilt for the Day 1 Assignment — Easy', 'font-size: 12px; color: #00CEC9;');
+    </script>
+
+</body>
+</html>
+
