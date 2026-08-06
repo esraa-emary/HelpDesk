@@ -1,142 +1,168 @@
-// ===== Data: AI Task Mapping =====
-const tasks = [
-  {
-    id: "HD-101",
-    title: "Ticket submission form (title, description, category, priority)",
-    reason: "Well-scoped UI component with a known contract. Easy to verify visually and with component tests.",
-    tag: "ai"
-  },
-  {
-    id: "HD-102",
-    title: "Status transition guard (Open → In Progress → Resolved → Closed)",
-    reason: "Logic is mechanical once the state model is approved, but the model itself came from a human decision — AI drafts, human verifies against Day 1/2 rules.",
-    tag: "partial"
-  },
-  {
-    id: "HD-103",
-    title: "Ownership / assignment rules (auto vs. manual)",
-    reason: "Still an open question from Day 1. AI must not invent a business rule the team hasn't decided on.",
-    tag: "human"
-  },
-  {
-    id: "HD-104",
-    title: "Manager dashboard aggregation queries",
-    reason: "AI can draft the query shape, but performance and correctness against real ticket volume need human validation.",
-    tag: "partial"
-  },
-  {
-    id: "HD-105",
-    title: "Notification trigger on status change",
-    reason: "Boilerplate integration work with a clear, testable contract (event in, notification out).",
-    tag: "ai"
-  },
-  {
-    id: "HD-106",
-    title: "Authentication & permission boundaries",
-    reason: "Security-critical. Mistakes are costly and hard to detect from output alone — kept human-led with restricted AI access.",
-    tag: "human"
-  },
-  {
-    id: "HD-107",
-    title: "Unit tests for ticket CRUD endpoints",
-    reason: "Strong AI fit for coverage breadth; every generated test is still run and read before being trusted.",
-    tag: "ai"
-  },
-  {
-    id: "HD-108",
-    title: "Debug: resolved tickets reappearing as Open",
-    reason: "AI helps interpret logs and diffs, but root-cause and fix decisions stay human — see the debugging example below.",
-    tag: "partial"
-  },
-  {
-    id: "HD-109",
-    title: "Knowledge base / self-service structure",
-    reason: "Explicitly deferred and unclear in Day 1's open questions. Not a task to hand to AI until scope is decided.",
-    tag: "human"
-  },
-  {
-    id: "HD-110",
-    title: "Docstrings / inline documentation for existing modules",
-    reason: "Low-risk, high-leverage for AI — output is descriptive, not decision-making, and cheap to verify by reading.",
-    tag: "ai"
-  }
-];
+(function () {
+  "use strict";
 
-const tagLabel = { ai: "AI-SUPPORTED", human: "HUMAN-LED", partial: "PARTIAL" };
-
-function renderTickets() {
-  const list = document.getElementById("ticketList");
-  list.innerHTML = tasks.map(t => `
-    <article class="ticket-card">
-      <span class="ticket-card-id">${t.id}</span>
-      <div class="ticket-card-body">
-        <h4>${t.title}</h4>
-        <p>${t.reason}</p>
-      </div>
-      <div class="ticket-card-tag">
-        <span class="tag tag-${t.tag}">${tagLabel[t.tag]}</span>
-      </div>
-    </article>
-  `).join("");
-}
-
-// ===== Data: Submission checklist =====
-const checklistItems = [
-  "AI is not applied blindly to every task",
-  "Each AI-supported task has a stated reason",
-  "Context and access levels are defined per task",
-  "The coding workflow includes a planning step before implementation",
-  "AI output is reviewed before acceptance, not accepted on confidence",
-  "Debugging includes evidence — reproduction, diff, logs — not only guesses",
-  "Verification is visible (tests, runtime checks, diff walkthrough)",
-  "Tool update checking is included with named trusted sources",
-  "Day 1 and Day 2 scope boundaries are preserved, not restarted",
-  "The walkthrough explains reasoning, not just screens"
-];
-
-function renderChecklist() {
-  const list = document.getElementById("checklistList");
-  list.innerHTML = checklistItems.map(item => `<li>${item}</li>`).join("");
-}
-
-// ===== Mobile nav toggle =====
-function setupMobileNav() {
-  const toggle = document.getElementById("sidebarToggle");
-  const nav = document.getElementById("sidebarNav");
-  if (!toggle || !nav) return;
-  toggle.addEventListener("click", () => nav.classList.toggle("open"));
-  nav.querySelectorAll(".nav-link").forEach(link => {
-    link.addEventListener("click", () => nav.classList.remove("open"));
-  });
-}
-
-// ===== Scroll-spy active nav state =====
-function setupScrollSpy() {
-  const links = Array.from(document.querySelectorAll(".nav-link"));
-  const sections = links
-    .map(link => document.querySelector(link.getAttribute("href")))
+  /* ============================================================
+     TAB NAV — active state follows scroll position
+     ============================================================ */
+  var tabLinks = Array.prototype.slice.call(document.querySelectorAll(".tab-link"));
+  var sections = tabLinks
+    .map(function (link) {
+      var id = link.getAttribute("href").slice(1);
+      return document.getElementById(id);
+    })
     .filter(Boolean);
 
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = "#" + entry.target.id;
-          links.forEach(link => {
-            link.classList.toggle("active", link.getAttribute("href") === id);
-          });
+  function setActiveTab() {
+    var scrollPos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function (sec) {
+      if (sec.offsetTop <= scrollPos) current = sec;
+    });
+    tabLinks.forEach(function (link) {
+      link.classList.toggle("is-active", link.dataset.tab === current.id);
+    });
+  }
+
+  window.addEventListener("scroll", setActiveTab, { passive: true });
+  window.addEventListener("load", setActiveTab);
+  setActiveTab();
+
+  /* ============================================================
+     KANBAN BOARD — drag & drop + keyboard move
+     ============================================================ */
+  var TICKETS = [
+    { id: "HD-101", title: "Scope self-service / knowledge base for v2", col: "not-started" },
+    { id: "HD-102", title: "Sketch reporting & analytics needs (later)", col: "not-started" },
+
+    { id: "HD-103", title: "Draft intake field list (WA-A)", col: "ready" },
+    { id: "HD-104", title: "Draft ticket data model (WA-B)", col: "ready" },
+    { id: "HD-105", title: "Define the three access roles (WA-H)", col: "ready" },
+
+    { id: "HD-100", title: "Run clarification pass on the six open questions", col: "in-progress" },
+
+    { id: "HD-106", title: "Finalize state machine — blocked on Q3", col: "blocked" },
+    { id: "HD-107", title: "Choose assignment model — blocked on Q2 (WA-C)", col: "blocked" },
+    { id: "HD-108", title: "Scope manager dashboard — blocked on Q4 (WA-E)", col: "blocked" },
+    { id: "HD-109", title: "Design notifications — depends on HD-107 (WA-G)", col: "blocked" }
+  ];
+
+  var board = document.getElementById("board");
+  var dropzones = board ? Array.prototype.slice.call(board.querySelectorAll("[data-dropzone]")) : [];
+
+  function renderBoard() {
+    dropzones.forEach(function (zone) {
+      zone.innerHTML = "";
+    });
+
+    TICKETS.forEach(function (ticket) {
+      var zone = board.querySelector('[data-dropzone="' + ticket.col + '"]');
+      if (!zone) return;
+
+      var card = document.createElement("div");
+      card.className = "card-ticket";
+      card.setAttribute("draggable", "true");
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
+      card.dataset.id = ticket.id;
+      card.setAttribute(
+        "aria-label",
+        ticket.title + ". Currently in " + columnLabel(ticket.col) + ". Press Ctrl or Cmd plus arrow keys to move."
+      );
+
+      var idEl = document.createElement("span");
+      idEl.className = "card-ticket__id";
+      idEl.textContent = ticket.id;
+
+      var titleEl = document.createElement("span");
+      titleEl.className = "card-ticket__title";
+      titleEl.textContent = ticket.title;
+
+      card.appendChild(idEl);
+      card.appendChild(titleEl);
+      zone.appendChild(card);
+
+      card.addEventListener("dragstart", function (e) {
+        card.classList.add("is-dragging");
+        e.dataTransfer.setData("text/plain", ticket.id);
+        e.dataTransfer.effectAllowed = "move";
+      });
+      card.addEventListener("dragend", function () {
+        card.classList.remove("is-dragging");
+      });
+      card.addEventListener("keydown", function (e) {
+        if (!(e.ctrlKey || e.metaKey)) return;
+        var order = ["not-started", "ready", "in-progress", "blocked"];
+        var idx = order.indexOf(ticket.col);
+        if (e.key === "ArrowRight" && idx < order.length - 1) {
+          e.preventDefault();
+          moveTicket(ticket.id, order[idx + 1]);
+          focusCardById(ticket.id);
+        } else if (e.key === "ArrowLeft" && idx > 0) {
+          e.preventDefault();
+          moveTicket(ticket.id, order[idx - 1]);
+          focusCardById(ticket.id);
         }
       });
-    },
-    { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
-  );
+    });
 
-  sections.forEach(sec => observer.observe(sec));
-}
+    updateCounts();
+  }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderTickets();
-  renderChecklist();
-  setupMobileNav();
-  setupScrollSpy();
-});
+  function focusCardById(id) {
+    window.requestAnimationFrame(function () {
+      var el = board.querySelector('.card-ticket[data-id="' + id + '"]');
+      if (el) el.focus();
+    });
+  }
+
+  function columnLabel(col) {
+    return (
+      {
+        "not-started": "Not started",
+        ready: "Ready to start",
+        "in-progress": "In progress",
+        blocked: "Blocked, waiting on decision"
+      }[col] || col
+    );
+  }
+
+  function moveTicket(id, newCol) {
+    var ticket = TICKETS.find(function (t) {
+      return t.id === id;
+    });
+    if (!ticket || ticket.col === newCol) return;
+    ticket.col = newCol;
+    renderBoard();
+  }
+
+  function updateCounts() {
+    board.querySelectorAll(".board__col").forEach(function (colEl) {
+      var col = colEl.dataset.col;
+      var count = TICKETS.filter(function (t) {
+        return t.col === col;
+      }).length;
+      var countEl = colEl.querySelector("[data-count]");
+      if (countEl) countEl.textContent = count;
+    });
+  }
+
+  dropzones.forEach(function (zone) {
+    zone.addEventListener("dragover", function (e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      zone.classList.add("is-dragover");
+    });
+    zone.addEventListener("dragleave", function () {
+      zone.classList.remove("is-dragover");
+    });
+    zone.addEventListener("drop", function (e) {
+      e.preventDefault();
+      zone.classList.remove("is-dragover");
+      var id = e.dataTransfer.getData("text/plain");
+      var newCol = zone.getAttribute("data-dropzone");
+      moveTicket(id, newCol);
+    });
+  });
+
+  if (board) renderBoard();
+})();
